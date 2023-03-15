@@ -9,11 +9,10 @@ const MainViewPort = (props) => {
     console.log("handlePageSelection", selectedIndex);
     setCurrentPageIndex(selectedIndex);
   };
-  console.log("MainViewPort forms data", props.formData.pages);
-  console.log("MainViewPort forms data length ", props.formData.pages.length);
+
   return (
     <>
-      {props.formData.pages.length === 0 ? (
+      {props.data.formData.pages.length === 0 ? (
         "Add a page to start"
       ) : (
         <Carousel
@@ -21,16 +20,15 @@ const MainViewPort = (props) => {
           activeIndex={currentPageIndex}
           onSelect={handlePageSelection}
         >
-          {props.formData.pages.map((page, index) => {
+          {props.data.formData.pages.map((page, index) => {
             return (
               <Carousel.Item key={index}>
                 {
                   <FormPage
-                    formData={props.formData}
+                    data = {props.data}
                     page={page}
                     index={index}
                     key={index}
-                    formOperation={props.formOperation}
                   ></FormPage>
                 }
               </Carousel.Item>

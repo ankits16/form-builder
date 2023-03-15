@@ -3,6 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import FormFieldAttribute from "./form-fields/FormFieldAttribute";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import './FormField.css'
 
 export default function FormField(props) {
   console.log('<<<<<<<<< Form field props')
@@ -18,12 +19,12 @@ export default function FormField(props) {
     <div ref={setNodeRef} style={style}>
     
     <div className="form-section-item-container">
-      <div>
-      <Accordion.Item eventKey={props.index + 1}>
-        <Accordion.Header>{props.field.id}</Accordion.Header>
+      <div className="col-11">
+      <Accordion.Item eventKey={props.index + 1} >
+        <Accordion.Header >{props.field.id}</Accordion.Header>
         <Accordion.Body>
           <Accordion.Item>
-            <FormFieldAttribute key={props.field.id} formField={props.field}></FormFieldAttribute>
+            <FormFieldAttribute data={props} key={props.field.id} formField={props.field}></FormFieldAttribute>
           </Accordion.Item>
         </Accordion.Body>
         </Accordion.Item>

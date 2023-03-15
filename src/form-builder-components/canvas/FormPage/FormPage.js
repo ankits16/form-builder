@@ -34,7 +34,7 @@ const FormPage = (props) => {
   };
 
   const addSection = () => {
-    console.log("addSection");
+    console.log(props);
     let sectionId = props.page.sections.length
       ? props.page.sections.length + 1
       : 1;
@@ -43,7 +43,7 @@ const FormPage = (props) => {
       { position:sectionId, id: sectionId, title: sectionId, fields: [] },
     ];
 
-    let updatedJson = { ...props.formData };
+    let updatedJson = { ...props.data.formData };
 
     updatedJson.pages.map((page) => {
       if (page.id === props.page.id) {
@@ -53,7 +53,7 @@ const FormPage = (props) => {
     console.log(updatedJson);
     console.log("end addSection");
 
-    props.formOperation(updatedJson);
+    props.data.formOperation(updatedJson);
   };
 
   const sensors = useSensors(
@@ -66,7 +66,7 @@ const FormPage = (props) => {
   function updateDatasourceAfterSectionDragEnd(event) {
     
     const { active, over } = event;
-    let updatedJson = { ...props.formData };
+    let updatedJson = { ...props.data.formData };
     let items  = props.page.sections;
     console.log('<< handleDragEnd')
     console.log(active)
@@ -84,7 +84,7 @@ const FormPage = (props) => {
         page.sections = items;
       }
     });
-    props.formOperation(updatedJson);
+    props.data.formOperation(updatedJson);
   }
 
   return (
@@ -130,10 +130,9 @@ const FormPage = (props) => {
                     key={section.id}
                     id={section.id}
                     section={section}
-                    formOperation={props.formOperation}
-                    formData={props.formData}
                     pageIndex={props.index}
                     page={props.page}
+                    data = {props.data}
                     sensors = {sensors}
                   ></PageSection>
                 );

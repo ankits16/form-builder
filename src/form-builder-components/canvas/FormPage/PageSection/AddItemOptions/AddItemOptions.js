@@ -2,17 +2,15 @@ import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
 const AddItemOptions = (props) => {
-    const getNewFormFieldId = ()=>{
-        let newFieldEditorId = props.data.section.fields.length
-        ? props.data.section.fields.length + 1
-        : 1;
-      console.log(newFieldEditorId);
-      return newFieldEditorId
-    }
+  const getNewFormFieldId = () => {
+    console.log(props);
+    let newFieldEditorId = props.data.section.fields.length + 1
+    console.log(newFieldEditorId);
+    return newFieldEditorId;
+  };
   const addFormField = (fieldDict) => {
-    
     let fields = [...props.data.section.fields, fieldDict];
-    let updatedJson = { ...props.data.formData };
+    let updatedJson = { ...props.data.data.formData };
 
     updatedJson.pages.map((page) => {
       if (page.id === props.data.page.id) {
@@ -26,7 +24,7 @@ const AddItemOptions = (props) => {
     console.log(updatedJson);
     console.log("added form field in section " + props.data.section.id);
 
-    props.data.formOperation(updatedJson);
+    props.data.data.formOperation(updatedJson);
   };
   const addTextField = () => {
     addFormField({
@@ -83,7 +81,6 @@ const AddItemOptions = (props) => {
     });
   };
 
-
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -94,10 +91,18 @@ const AddItemOptions = (props) => {
         <Dropdown.Item href="#/action-1" onClick={addTextField}>
           Text
         </Dropdown.Item>
-        <Dropdown.Item href="#/action-2" onClick={addVideoField}>Video</Dropdown.Item>
-        <Dropdown.Item href="#/action-3" onClick={addImageField}>Image</Dropdown.Item>
-        <Dropdown.Item href="#/action-3" onClick={addCheckboxField}>Checkbox</Dropdown.Item>
-        <Dropdown.Item href="#/action-3" onClick={addQuantityField}>Quantity</Dropdown.Item>
+        <Dropdown.Item href="#/action-2" onClick={addVideoField}>
+          Video
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-3" onClick={addImageField}>
+          Image
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-3" onClick={addCheckboxField}>
+          Checkbox
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-3" onClick={addQuantityField}>
+          Quantity
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

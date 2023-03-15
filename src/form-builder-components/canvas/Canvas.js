@@ -22,7 +22,7 @@ const Canvas = (props) => {
         <Button variant="primary" onClick={exportJson}>Export</Button>
         </div>
         <div className="box">
-          <MainViewPort pages = {props.pages} formData={props.formData} formOperation={props.formOperation}></MainViewPort>
+          <MainViewPort data={props}></MainViewPort>
         </div>
         <div className="sidebar">
           <Palette formData={props.formData} formOperation={props.formOperation}></Palette>
