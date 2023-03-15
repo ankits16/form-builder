@@ -1,0 +1,41 @@
+.vcenter-item{
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+/* Some custom styles to beautify this example */
+.wrapper{
+    padding: 25px;
+    margin: 20px;
+    background: #302d8e;
+    min-height: 100%;
+}
+.sidebar{
+    padding: 25px;
+    background: DodgerBlue;
+    width: 25%;
+}
+.box{
+    padding: 25px;
+    background: rgb(134, 232, 235);
+    width: 100%;
+    height: auto;
+    border: #95a232;
+    border-width: 20;
+    margin: 20px;
+    /* clear:both; */
+    /* overflow:auto */
+}
+
+.canvas{
+    display: flex;
+    background: rgb(134, 232, 235);
+    padding: 30px 0px 20px 0px;
+    /* overflow:auto */
+    /* clear:both; */
+}
+
+/* margin: 20px;
+  border: 2px solid blue;
+  padding: 5px; */

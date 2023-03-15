@@ -1,0 +1,21 @@
+.page-section-container {
+  /* display: flex; */
+  /* justify-content: space-between; */
+  margin: 20px;
+  border: 2px solid blue;
+  padding: 5px;
+}
+
+.page-section-item{
+  margin: 120px;
+  border: 2px solid rgb(17, 197, 53);
+  padding: 15px;
+}
+
+.form-item-header-item{
+  margin: 10px;
+}
+
+.form-item-header-container{
+  display: flex;
+}

@@ -1,0 +1,121 @@
+{
+  "title": "form_title_goes_here",
+
+  "pages": [
+    {
+      "id": 1,
+      "sections": [
+        {
+          "position": 1,
+          "id": 1,
+          "title": "Title for Section 1",
+          "fields": [
+            {
+              "editor_id": 1,
+              "id": "name",
+              "type": "text ",
+              "view_label": "Name",
+              "capture_label": "Please enter your name",
+              "form_model": { "required": false,
+                "active": "s => s.age === '18'§§"}
+            },
+            {
+              "editor_id": 2,
+              "id": "consent",
+              "type": "checkbox",
+              "view_label": "Data Consent",
+              "capture_label": "Please confirm",
+              "form_model": { "required": false}
+            },
+            {
+              "editor_id": 3,
+              "id": "age",
+              "type": "quantity",
+              "view_label": "Age",
+              "capture_label": "Please enter your age",
+              "form_model": { "required": false}
+            },
+            {
+              "editor_id": 4,
+              "id": "basic_video",
+              "type": "video",
+              "view_label": "Basic Video",
+              "capture_label": "Record a video showing surrounding",
+              "form_model": {
+                "videoCapture": {
+                  "acceptMedia": "vyn.AcceptMediaTypes.AudioVideo",
+                  "acceptMediaOptions": ["vyn.AcceptMediaTypes.AudioVideo", "vyn.AcceptMediaTypes.Video"],
+                  "canPause": false,
+                  "maxDuration": 20000,
+                  "width": 640,
+                  "height": 480,
+                  "facingMode": "vyn.FacingModes.Front",
+                  "capture_label": "\"Record a video showing surrounding\""
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "sections": [
+        {
+          "id": 1,
+          "title": "General Data section 2",
+          "fields": [
+            {
+              "editor_id": 1,
+              "id": "name",
+              "type": "text",
+              "view_label": "Name",
+              "capture_label": "Please enter your name page 2",
+              "form_model": { "required": false,
+                "active": "s => s.age === '18'§§"}
+            },
+            {
+              "editor_id": 2,
+              "id": "consent",
+              "type": "checkbox",
+              "view_label": "Data Consent",
+              "capture_label": "Please confirm",
+              "form_model": { "required": false}
+            },
+            {
+              "editor_id": 3,
+              "id": "age",
+              "type": "quantity",
+              "view_label": "Age",
+              "capture_label": "Please enter your age",
+              "form_model": { "required": false}
+            },
+            {
+              "editor_id": 4,
+              "id": "basic_video",
+              "type": "video",
+              "view_label": "Basic Video",
+              "capture_label": "Record a video showing surrounding",
+              "form_model": {
+                "videoCapture": {
+                  "acceptMedia": "vyn.AcceptMediaTypes.AudioVideo",
+                  "acceptMediaOptions": ["vyn.AcceptMediaTypes.AudioVideo", "vyn.AcceptMediaTypes.Video"],
+                  "canPause": false,
+                  "maxDuration": 20000,
+                  "width": 640,
+                  "height": 480,
+                  "facingMode": "vyn.FacingModes.Front",
+                  "capture_label": "\"Record a video showing surrounding\""
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "sections": []
+    }
+  ]
+}
