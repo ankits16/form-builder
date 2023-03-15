@@ -43,7 +43,7 @@ function App() {
   return (
     <>
       <FormBuilderHeader />
-      <DragUI></DragUI>
+      {/* <DragUI></DragUI> */}
       <Canvas formData={formData} formOperation={updateFormDataFromUI} />
       
     </>
