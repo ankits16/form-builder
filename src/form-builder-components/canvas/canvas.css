@@ -13,12 +13,12 @@
 }
 .sidebar{
     padding: 25px;
-    background: DodgerBlue;
+    background: rgb(213, 215, 218);
     width: 25%;
 }
 .box{
     padding: 25px;
-    background: rgb(134, 232, 235);
+    background: rgb(164, 187, 35);
     width: 100%;
     height: auto;
     border: #95a232;
@@ -30,7 +30,7 @@
 
 .canvas{
     display: flex;
-    background: rgb(134, 232, 235);
+    background: rgb(164, 187, 35);
     padding: 30px 0px 20px 0px;
     /* overflow:auto */
     /* clear:both; */

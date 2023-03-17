@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import FormFieldAttribute from "./form-fields/FormFieldAttribute";
+import {PageOperations} from "../FormPage.js"
+import FormFieldAttribute from "./form-fields-attributes/FormFieldAttribute";
 import Accordion from "react-bootstrap/Accordion";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -20,61 +21,104 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { MdOutlineDragIndicator, MdDelete } from "react-icons/md";
+
+/**
+ * opeartions at page section level
+ * - add field
+ * - delete field
+ * - update field
+ */
+export const PageSectionLevelOperations = Object.freeze({
+  AddField: Symbol('addField'),
+  DeleteField: Symbol('deleteField'),
+  UpdateField: Symbol('updateField'),
+});
 
 const PageSection = (props) => {
-  // console.log('<<<<<<<PageSection init>>>>>>>')
-  // console.log(props)
-  // console.log('<<<<<<<PageSection init end>>>>>>>')
+  
+  /**
+   * dnd kit sortable related
+   */
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  const [sectionTitle, setSectionTitle] = useState(props.section.title);
-  // setSectionTitle(props.section.title)
-
+  
+  /**
+   * get section title for a section. If empty simply return Section_<<id>>
+   */
   const getHeader = () => {
-    // console.log(props.section);
     return props.section.title
       ? props.section.title
-      : "Section " + props.section.id;
+      : "Section_" + props.section.id;
   };
 
-  const deleteSection = () => {
-    console.log("delete section");
-    console.log(props);
-
-    let sectionId = props.section.id;
-    let filteredSections = props.page.sections.filter((e) => {
-      return e.id !== sectionId;
-    });
-    filteredSections.map((section, index) => {
-      section.id = index;
-    });
-    console.log("filteredSections");
-    console.log(filteredSections);
-    let updatedFormData = { ...props.data.formData };
-    updatedFormData.pages.map((page, index) => {
-      console.log(page.id + "-----" + props.pageIndex);
-      if (index === props.pageIndex) {
-        page.sections = filteredSections;
-      }
-    });
-    console.log(updatedFormData);
-    props.data.formOperation(updatedFormData);
+  const handleSectionDeletion = () => {
+    props.operation(PageOperations.DeleteSection, props.section.id)
   };
 
-  function updateDatasourceAfterFieldDragEnd(event) {
+  const callUpdateSection = (updatedFields) => {
+    let updatedSection = { ...props.section };
+    updatedSection.fields = updatedFields;
+    props.operation(PageOperations.UpdateSection, [updatedSection])
+  };
+
+  const deleteField = (fieldId)=>{
+    let filteredFields = props.section.fields.filter((e) => {
+      return e.editor_id !== fieldId;
+    });
+    filteredFields.map((section, index) => {
+      section.editor_id = index;
+    });
+    callUpdateSection(filteredFields)
+  }
+
+  const addField = (newField) =>{
+    let updatedFields = [... props.section.fields, newField]
+    callUpdateSection(updatedFields)
+  }
+
+  const updateFields = (impactedFields)=>{
+    let updatedFields = [...props.section.fields];
+    impactedFields.map((impactedField) => {
+      let oldFieldIndex = -1;
+      updatedFields.map((field, index) => {
+        if (field.editor_id === impactedField.editor_id) {
+          oldFieldIndex = index;
+        }
+      });
+      updatedFields.splice(oldFieldIndex, 1, impactedField);
+    });
+    callUpdateSection(updatedFields)
+  }
+
+  const operation = (operationType, params)=>{
+    switch (operationType){
+      case PageSectionLevelOperations.AddField:
+        addField(params)
+        break
+      case PageSectionLevelOperations.DeleteField:
+        deleteField(params)
+        break
+      case PageSectionLevelOperations.UpdateField:
+        updateFields(params)
+        break
+      default:
+        console.error("Uxexpedted operation type at form field level " + operationType)
+    }
+  }
+
+  /**
+   * update the data source or parent json afterthe drag and drop of a section is complete
+   */
+  const updateDatasourceAfterFieldDragEnd = ((event) => {
     console.log("updateDatasourceAfterFieldDragEnd");
     const { active, over } = event;
-    console.log(props);
-    let updatedJson = { ...props.data.formData };
     let items = props.section.fields;
-    // console.log('<< handleDragEnd')
-    // console.log(active)
-    // console.log(over.id )
-
+    
     if (active.id !== over.id) {
       let activeField = items.filter(
         (field) => field.editor_id === active.id
@@ -84,48 +128,26 @@ const PageSection = (props) => {
       const newIndex = items.indexOf(overField);
       items = arrayMove(items, oldIndex, newIndex);
     }
-    updatedJson.pages.map((page) => {
-      if (page.id === props.page.id) {
-        page.sections.map((section) => {
-          if (section.id === props.section.id) {
-            section.fields = items;
-          }
-        });
-      }
-    });
-    // console.log("updated JSon");
-    // console.log(updatedJson);
-    props.data.formOperation(updatedJson);
-  }
+    callUpdateSection(items)
+  })
 
   const handleSectionTitleChange = (event) => {
-    // console.log('handleSectionTitleChange')
-    // console.log(props)
-    let updatedJson = { ...props.data.formData };
-    console.log(event.target.value);
-    updatedJson.pages.map((page) => {
-      if (page.id === props.page.id) {
-        page.sections.map((section) => {
-          if (section.id === props.section.id) {
-            section.title = event.target.value;
-          }
-        });
-      }
-    });
-    props.data.formOperation(updatedJson);
+    let updatedSection = {... props.section}
+    updatedSection.title = event.target.value;
+    props.operation(PageOperations.UpdateSection, [updatedSection])
   };
 
   return (
     <div ref={setNodeRef} style={style}>
       <div className="form-item-header-container">
-        <div>
+        <div className="form-item-header-item">
           <button
             type="button"
-            className="btn btn-info"
+            className="btn"
             {...listeners}
             {...attributes}
           >
-            ::
+             <MdOutlineDragIndicator/>
           </button>
         </div>
         <div className="col-8">
@@ -136,7 +158,7 @@ const PageSection = (props) => {
                 <div className="form-item-header-container" style={{padding:10}}>
                   <div>
                     <label htmlFor="inputPassword7" className="col-form-label">
-                      section title
+                      Section Title
                     </label>
                   </div>
                   <div>
@@ -150,7 +172,7 @@ const PageSection = (props) => {
                     />
                   </div>
                   <div>
-                    <AddItemOptions data={props} />
+                    <AddItemOptions data={props} operation ={operation}/>
                   </div>
                 </div>
                 <div>
@@ -164,12 +186,7 @@ const PageSection = (props) => {
                       strategy={verticalListSortingStrategy}
                     >
                       {props.section.fields.map((field, index) => {
-                        console.log("formfield map ");
-                        console.log(field);
-
                         let key = "FormField" + field.editor_id;
-                        console.log("key = " + key);
-                        console.log("end formfield map ");
                         return (
                           //   <Accordion.Item eventKey={index + 1}>
                           <FormField
@@ -177,7 +194,8 @@ const PageSection = (props) => {
                             id={field.editor_id}
                             index={index}
                             field={field}
-                
+                            data={props.data}
+                            operation={operation}
                           ></FormField>
                           //   </Accordion.Item>
                         );
@@ -190,8 +208,8 @@ const PageSection = (props) => {
           </Accordion>
         </div>
         <div className="form-item-header-item">
-          <button className="btn btn-danger" onClick={deleteSection}>
-            Delete Section
+          <button className="btn" onClick={handleSectionDeletion}>
+            <MdDelete/>
           </button>
         </div>
       </div>

@@ -16,79 +16,122 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import "./FormPage.css";
+import { MainViewPortLevelOperations } from "../MainViewPort";
+
+/**
+ * possible operations at page level
+ * - Add section
+ * - delete section
+ * - Swap Section
+ * - Update existing section
+ */
+export const PageOperations = Object.freeze({
+  AddSection: Symbol("add"),
+  DeleteSection: Symbol("delete"),
+  UpdateSection: Symbol("updateSection"),
+});
 
 const FormPage = (props) => {
-  const deletePage = () => {
-    // props.formOperation("delete-page", props.page.id);
-    let pageId = props.page.id;
-    let filterdPages = props.formData.pages.filter((e) => {
-      return e.id !== pageId;
-    });
-    filterdPages.map((page, index) => {
-      page.id = index;
-    });
-    let updatedFormData = { ...props.formData };
-    updatedFormData.pages = filterdPages;
-    console.log("after deletePage", filterdPages);
-    props.formOperation(updatedFormData);
-  };
-
-  const addSection = () => {
-    console.log(props);
-    let sectionId = props.page.sections.length
-      ? props.page.sections.length + 1
-      : 1;
-    let sections = [
-      ...props.page.sections,
-      { position:sectionId, id: sectionId, title: sectionId, fields: [] },
-    ];
-
-    let updatedJson = { ...props.data.formData };
-
-    updatedJson.pages.map((page) => {
-      if (page.id === props.page.id) {
-        page.sections = sections;
-      }
-    });
-    console.log(updatedJson);
-    console.log("end addSection");
-
-    props.data.formOperation(updatedJson);
-  };
-
-  const sensors = useSensors(
+   /**
+   * sensors are required for dnd kit so that drag and drop operation can be performed
+   */
+   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
 
+  /**
+   * delete page from form builder json
+   */
+  const deletePage = () => {
+    // props.formOperation("delete-page", props.page.id);
+    props.operation(MainViewPortLevelOperations.DeletePage, props.page.id);
+  };
+
+  const callUpdatePage = (updatedSections) => {
+    let updatedPage = { ...props.page };
+    updatedPage.sections = updatedSections;
+    props.operation(MainViewPortLevelOperations.UpdatePage, updatedPage);
+  };
+
+  /**
+   * add a section to the under page item and update the form builder json
+   * adds section at the bottom
+   */
+  const addSection = () => {
+    let sectionId = props.page.sections.length
+      ? props.page.sections.length + 1
+      : 1;
+    let sections = [
+      ...props.page.sections,
+      { position: sectionId, id: sectionId, title: "", fields: [] },
+    ];
+    callUpdatePage(sections);
+  };
+
+  const deleteSectionAtIndex = (sectionId) => {
+    console.log("deleteSectionAtIndex called " + sectionId);
+
+    let filteredSections = props.page.sections.filter((e) => {
+      return e.id !== sectionId;
+    });
+    filteredSections.map((section, index) => {
+      section.id = index;
+    });
+    callUpdatePage(filteredSections);
+  };
+
+  const updateSection = (impactedSections) => {
+    let updatedSections = [...props.page.sections];
+    impactedSections.map((impactedSection) => {
+      let oldSectionIndex = -1;
+      updatedSections.map((section, index) => {
+        if (section.id === impactedSection.id) {
+          oldSectionIndex = index;
+        }
+      });
+      updatedSections.splice(oldSectionIndex, 1, impactedSection);
+    });
+
+    callUpdatePage(updatedSections);
+  };
+
+  const performOperation = (operationType, params) => {
+    switch (operationType) {
+      case PageOperations.DeleteSection:
+        deleteSectionAtIndex(params);
+        break;
+      case PageOperations.UpdateSection:
+        updateSection(params);
+        break;
+      default:
+        console.error("unidentified operation");
+    }
+  };
+
+ 
+
   function updateDatasourceAfterSectionDragEnd(event) {
-    
     const { active, over } = event;
     let updatedJson = { ...props.data.formData };
-    let items  = props.page.sections;
-    console.log('<< handleDragEnd')
-    console.log(active)
-    console.log(over.id )
+    let items = props.page.sections;
     
     if (active.id !== over.id) {
-      let activeSection = items.filter((section)=> section.id === active.id )[0]
-      let overSection = items.filter((section)=> section.id === over.id )[0]
+      let activeSection = items.filter(
+        (section) => section.id === active.id
+      )[0];
+      let overSection = items.filter((section) => section.id === over.id)[0];
       const oldIndex = items.indexOf(activeSection);
       const newIndex = items.indexOf(overSection);
       items = arrayMove(items, oldIndex, newIndex);
     }
-    updatedJson.pages.map((page) => {
-      if (page.id === props.page.id) {
-        page.sections = items;
-      }
-    });
-    props.data.formOperation(updatedJson);
+    callUpdatePage(items)
   }
 
   return (
-    <div>
+    <div style={{ padding: 50 }}>
       <div className="form-page card">
         <div className="form-page__top">
           <div className="form-page__top_item">
@@ -124,7 +167,7 @@ const FormPage = (props) => {
               items={props.page.sections}
               strategy={verticalListSortingStrategy}
             >
-              {props.page.sections.map((section, index) => {
+              {props.page.sections.map((section) => {
                 return (
                   <PageSection
                     key={section.id}
@@ -132,8 +175,9 @@ const FormPage = (props) => {
                     section={section}
                     pageIndex={props.index}
                     page={props.page}
-                    data = {props.data}
-                    sensors = {sensors}
+                    data={props.data}
+                    operation={performOperation}
+                    sensors={sensors}
                   ></PageSection>
                 );
               })}

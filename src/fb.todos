@@ -1,0 +1,13 @@
+#17th March 2023
+	1.	Background colour : done
+	2.	space between page control and container  : done
+	3.	Editor label : Id, Type, View Label, Capture Label, Form Model : done
+	4.	Section Title : done
+	5.	default section title : section _1 : done
+	6.	Slugify: view label (all small , remove special character, replace space by _:  this value is value for id,) : done
+	7.	Ids should be unique across all pages
+	8.	<slugified><index> : index only if more than 1
+	9.	On manually edit of id show the error in case of duplication
+	10.	Select and Options Field type : done
+	11.	Editor id needs to be removed from UI and Json : done
+    12. Delete page not working : done

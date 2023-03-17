@@ -1,35 +1,24 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+import { PageSectionLevelOperations } from "../PageSection";
 
 const AddItemOptions = (props) => {
   const getNewFormFieldId = () => {
     console.log(props);
-    let newFieldEditorId = props.data.section.fields.length + 1
+    let newFieldEditorId = props.data.section.fields.length + 1;
     console.log(newFieldEditorId);
     return newFieldEditorId;
   };
+
   const addFormField = (fieldDict) => {
-    let fields = [...props.data.section.fields, fieldDict];
-    let updatedJson = { ...props.data.data.formData };
-
-    updatedJson.pages.map((page) => {
-      if (page.id === props.data.page.id) {
-        page.sections.map((section) => {
-          if (section.id === props.data.section.id) {
-            section.fields = fields;
-          }
-        });
-      }
-    });
-    console.log(updatedJson);
-    console.log("added form field in section " + props.data.section.id);
-
-    props.data.data.formOperation(updatedJson);
+    props.operation(PageSectionLevelOperations.AddField, fieldDict);
   };
+
   const addTextField = () => {
     addFormField({
       editor_id: getNewFormFieldId(),
-      id: "field_id_" + getNewFormFieldId(),
+      id: "",
       type: "text ",
       view_label: "",
       capture_label: "",
@@ -40,7 +29,7 @@ const AddItemOptions = (props) => {
   const addImageField = () => {
     addFormField({
       editor_id: getNewFormFieldId(),
-      id: "image_field_id_" + getNewFormFieldId(),
+      id: "",
       type: "image ",
       view_label: "",
       capture_label: "",
@@ -51,7 +40,7 @@ const AddItemOptions = (props) => {
   const addVideoField = () => {
     addFormField({
       editor_id: getNewFormFieldId(),
-      id: "video_field_id_" + getNewFormFieldId(),
+      id: "",
       type: "video ",
       view_label: "",
       capture_label: "",
@@ -73,8 +62,30 @@ const AddItemOptions = (props) => {
   const addQuantityField = () => {
     addFormField({
       editor_id: getNewFormFieldId(),
-      id: "quantity_field_id_" + getNewFormFieldId(),
+      id: "",
       type: "quantity ",
+      view_label: "",
+      capture_label: "",
+      form_model: "",
+    });
+  };
+
+  const addSelectField = () => {
+    addFormField({
+      editor_id: getNewFormFieldId(),
+      id: "",
+      type: "select ",
+      view_label: "",
+      capture_label: "",
+      form_model: "",
+    });
+  };
+
+  const addOptionField = () => {
+    addFormField({
+      editor_id: getNewFormFieldId(),
+      id: "",
+      type: "option ",
       view_label: "",
       capture_label: "",
       form_model: "",
@@ -83,8 +94,8 @@ const AddItemOptions = (props) => {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Add Field
+      <Dropdown.Toggle id="dropdown-basic">
+        <MdFormatListBulletedAdd />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
@@ -102,6 +113,12 @@ const AddItemOptions = (props) => {
         </Dropdown.Item>
         <Dropdown.Item href="#/action-3" onClick={addQuantityField}>
           Quantity
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-3" onClick={addSelectField}>
+          Select
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-3" onClick={addOptionField}>
+          Option
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
