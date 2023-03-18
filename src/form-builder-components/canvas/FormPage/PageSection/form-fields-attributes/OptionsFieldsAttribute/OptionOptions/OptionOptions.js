@@ -43,9 +43,9 @@ const OptionOptions = (props) => {
   };
 
   return (
-    <div className="options-option-container">
+    <div className="options-option-container" ref={setNodeRef} style={style}>
       <div className="options-option-item">
-        <button className="btn" ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <button className="btn" {...attributes} {...listeners}>
           <MdOutlineDragIndicator />
         </button>
       </div>

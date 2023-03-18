@@ -32,8 +32,8 @@ const SelectOptions = (props) => {
   }
 
   return (
-    <div className='select-option-container'>
-      <button className='btn' ref={setNodeRef} style={style} {...attributes} {...listeners}><MdOutlineDragIndicator/></button>
+    <div className='select-option-container' ref={setNodeRef} style={style}>
+      <button className='btn'  {...attributes} {...listeners}><MdOutlineDragIndicator/></button>
       <input value={props.option.value} onChange ={handleValueChange}></input>
       <button className='btn' onClick={handleOptionDelete}><MdDelete/></button>
     </div>

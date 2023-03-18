@@ -131,6 +131,11 @@ const PageSection = (props) => {
     callUpdateSection(items)
   })
 
+  const editorIds = []
+  props.section.fields.map((field)=>{
+    editorIds.push(field.editor_id)
+  })
+
   const handleSectionTitleChange = (event) => {
     let updatedSection = {... props.section}
     updatedSection.title = event.target.value;
@@ -182,7 +187,7 @@ const PageSection = (props) => {
                     onDragEnd={updateDatasourceAfterFieldDragEnd}
                   >
                     <SortableContext
-                      items={props.section.fields}
+                      items={editorIds}
                       strategy={verticalListSortingStrategy}
                     >
                       {props.section.fields.map((field, index) => {
