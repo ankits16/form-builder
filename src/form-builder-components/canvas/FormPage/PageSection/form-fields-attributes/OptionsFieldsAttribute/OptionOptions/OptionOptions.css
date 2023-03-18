@@ -1,0 +1,9 @@
+.options-option-container{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+.options-option-item{
+    padding: 5px;
+}

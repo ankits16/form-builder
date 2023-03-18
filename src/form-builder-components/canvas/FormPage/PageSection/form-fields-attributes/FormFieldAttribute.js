@@ -1,6 +1,7 @@
 import React from "react";
 import "./FormFieldAttribute.css";
 import IdFieldAttribute from "./IdFieldAttribute/IdFieldAttribute";
+import OptionsFieldsAttribute from "./OptionsFieldsAttribute/OptionsFieldsAttribute";
 import ViewLabelFieldAttribute from "./ViewLabelFieldAttribute/ViewLabelFieldAttribute";
 const FormFieldAttribute = (props) => {
   const fieldAttributeDisplayMap = {
@@ -29,6 +30,8 @@ const FormFieldAttribute = (props) => {
             operation={props.operation}
           />
         );
+      case "options":
+        return (<OptionsFieldsAttribute field={props.formField} operation={props.operation}/>)
       default:
         return (
           <input
@@ -50,8 +53,7 @@ const FormFieldAttribute = (props) => {
   });
   return keys.map((key) => {
     return (
-      <div className="card" style={{ height: 50, padding: 10 }}>
-        <div className="form-field-container">
+        <div className="form-field-attribute-container">
           <div>
             {fieldAttributeDisplayMap[key]
               ? fieldAttributeDisplayMap[key]
@@ -59,7 +61,6 @@ const FormFieldAttribute = (props) => {
           </div>
           <div>{getFieldAttribute(key)}</div>
         </div>
-      </div>
     );
   });
 };

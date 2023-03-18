@@ -1,4 +1,5 @@
-.form-field-container {
+.form-field-attribute-container {
   display: flex;
   justify-content: space-between;
+  padding: 10px;
 }

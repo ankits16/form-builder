@@ -4,6 +4,7 @@ import { MdFormatListBulletedAdd } from "react-icons/md";
 import { PageSectionLevelOperations } from "../PageSection";
 
 const AddItemOptions = (props) => {
+  
   const getNewFormFieldId = () => {
     console.log(props);
     let newFieldEditorId = props.data.section.fields.length + 1;
@@ -74,9 +75,10 @@ const AddItemOptions = (props) => {
     addFormField({
       editor_id: getNewFormFieldId(),
       id: "",
-      type: "select ",
+      type: "select",
       view_label: "",
       capture_label: "",
+      options:[],
       form_model: "",
     });
   };
@@ -85,9 +87,10 @@ const AddItemOptions = (props) => {
     addFormField({
       editor_id: getNewFormFieldId(),
       id: "",
-      type: "option ",
+      type: "options",
       view_label: "",
       capture_label: "",
+      options:[],
       form_model: "",
     });
   };
@@ -118,7 +121,7 @@ const AddItemOptions = (props) => {
           Select
         </Dropdown.Item>
         <Dropdown.Item href="#/action-3" onClick={addOptionField}>
-          Option
+          Options
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
