@@ -2,8 +2,24 @@ import React from "react";
 import "./OptionOptions.css";
 import { MdOutlineDragIndicator, MdDelete } from "react-icons/md";
 import { OptionLevelOperation } from "../OptionsFieldsAttribute";
+import {useSortable} from '@dnd-kit/sortable';
+import {CSS} from '@dnd-kit/utilities';
 
 const OptionOptions = (props) => {
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({id: props.option.id});
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   const handleValueChange = (event) => {
     let updatedOption = { ...props.option };
     updatedOption.value = event.target.value;
@@ -29,7 +45,7 @@ const OptionOptions = (props) => {
   return (
     <div className="options-option-container">
       <div className="options-option-item">
-        <button className="btn">
+        <button className="btn" ref={setNodeRef} style={style} {...attributes} {...listeners}>
           <MdOutlineDragIndicator />
         </button>
       </div>

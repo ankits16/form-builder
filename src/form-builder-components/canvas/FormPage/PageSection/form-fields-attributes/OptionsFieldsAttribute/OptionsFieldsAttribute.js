@@ -4,6 +4,21 @@ import { FormFieldLevelOperation } from "../../FormField";
 import OptionOptions from "./OptionOptions/OptionOptions";
 import SelectOptions from "./SelectOptions/SelectOptions";
 
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+
 export const OptionsType = Object.freeze({
   SelectOptions: "select",
   OptionOptions: "options",
@@ -15,13 +30,20 @@ export const OptionLevelOperation = Object.freeze({
 });
 
 const OptionsFieldsAttribute = (props) => {
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const handleChangeInOption = (operationType, impactedOption) => {
     switch (operationType) {
       case OptionLevelOperation.UpdateOption:
         updateOption(impactedOption);
         break;
       case OptionLevelOperation.DeleteOption:
-        deleteOption(impactedOption)
+        deleteOption(impactedOption);
         break;
       default:
         console.error("Unidentified OptionLevelOperation " + operationType);
@@ -81,33 +103,61 @@ const OptionsFieldsAttribute = (props) => {
   };
 
   const deleteOption = (optionId) => {
-    console.log('<<<<<<<< delete ' + optionId)
-    let updatedOptions = [...props.field.options]
-    updatedOptions = updatedOptions.filter((option)=>{
-        return option.id !== optionId
-    })
-    updatedOptions.map((option, index)=>{
-        option.id = index
-    })
+    console.log("<<<<<<<< delete " + optionId);
+    let updatedOptions = [...props.field.options];
+    updatedOptions = updatedOptions.filter((option) => {
+      return option.id !== optionId;
+    });
+    updatedOptions.map((option, index) => {
+      option.id = index;
+    });
     props.operation(FormFieldLevelOperation.UpdateFieldAttribute, {
-        options: updatedOptions,
-      });
+      options: updatedOptions,
+    });
+  };
+
+  const onOptionDragEnd = (event) => {
+    const { active, over } = event;
+    let updatedOptions = [...props.field.options];
+    let oldIndex = -1;
+    let newIndex = -1;
+    updatedOptions.map((option, index)=>{
+        if (option.id === active.id){
+            oldIndex = index
+        } 
+        if (option.id === over.id){
+            newIndex = index
+        }
+    })
+    updatedOptions = arrayMove(updatedOptions, oldIndex, newIndex);
+    props.operation(FormFieldLevelOperation.UpdateFieldAttribute, {
+      options: updatedOptions,
+    });
   };
 
   return (
     <div className="col-11" style={{ minWidth: 190 }}>
-      <Accordion >
+      <Accordion>
         <Accordion.Item eventKey="0">
-          <Accordion.Header >Options</Accordion.Header>
+          <Accordion.Header>Options</Accordion.Header>
           <Accordion.Body>
-            <div>
-              {props.field.options.map((option) => {
-                return getOptions(option);
-              })}
-              <div>
-                <button onClick={handleAddOption}>Add Option</button>
-              </div>
-            </div>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={onOptionDragEnd}
+            >
+              <SortableContext
+                items={props.field.options}
+                strategy={verticalListSortingStrategy}
+              >
+                {props.field.options.map((option) => {
+                  return getOptions(option);
+                })}
+                <div>
+                  <button onClick={handleAddOption}>Add Option</button>
+                </div>
+              </SortableContext>
+            </DndContext>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
