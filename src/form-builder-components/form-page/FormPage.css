@@ -2,7 +2,7 @@
   padding: 1rem;
   background-color: rgb(31, 31, 31);
   margin: 2rem auto;
-  width: 80rem;
+  /* width: 80rem; */
   max-width: 95%;
 }
 
@@ -56,10 +56,16 @@
 
 .form-page__section{
   margin: 20px;
-  border: 2px solid blue;
-  padding: 5px;
+  border: 2px solid rgb(222, 226, 223);
+  padding-top: 20px;
+  border-radius: 5px;
 }
 
 .form-item-header-container{
   display: flex;
+  min-height: 70px;
+}
+
+.form-item-header-elements{
+  padding: 20px;
 }

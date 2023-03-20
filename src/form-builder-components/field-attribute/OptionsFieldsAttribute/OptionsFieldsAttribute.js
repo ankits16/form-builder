@@ -1,6 +1,6 @@
 import React from "react";
 import { Accordion } from "react-bootstrap";
-import { FormFieldLevelOperation } from "../../FormField";
+import { FormFieldLevelOperation } from "../../form-field/FormField";
 import OptionOptions from "./OptionOptions/OptionOptions";
 import SelectOptions from "./SelectOptions/SelectOptions";
 

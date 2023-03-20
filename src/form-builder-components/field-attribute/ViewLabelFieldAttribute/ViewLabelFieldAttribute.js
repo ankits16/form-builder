@@ -1,5 +1,5 @@
 import React from "react";
-import { FormFieldLevelOperation } from "../../FormField";
+import { FormFieldLevelOperation } from "../../form-field/FormField";
 
 const ViewLabelFieldAttribute = (props) => {
   const slugify = (str) =>

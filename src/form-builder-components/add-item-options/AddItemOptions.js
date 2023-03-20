@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { MdFormatListBulletedAdd } from "react-icons/md";
-import { PageSectionLevelOperations } from "../PageSection";
+import { PageSectionLevelOperations } from "../page-section/PageSection";
 
 const AddItemOptions = (props) => {
   
@@ -13,7 +13,13 @@ const AddItemOptions = (props) => {
   };
 
   const addFormField = (fieldDict) => {
-    props.operation(PageSectionLevelOperations.AddField, fieldDict);
+    let updatedFieldDict = {...fieldDict}
+    if (!updatedFieldDict.form_model){
+      updatedFieldDict.form_model = JSON.stringify({required: false})
+    }else{
+      updatedFieldDict.form_model = JSON.stringify(updatedFieldDict.form_model)
+    }
+    props.operation(PageSectionLevelOperations.AddField, updatedFieldDict);
   };
 
   const addTextField = () => {

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import {PageOperations} from "../FormPage.js"
-import FormFieldAttribute from "./form-fields-attributes/FormFieldAttribute";
+import {PageOperations} from "../form-page/FormPage"
+import FormFieldAttribute from "../field-attribute/FormFieldAttribute";
 import Accordion from "react-bootstrap/Accordion";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import AddItemOptions from "./AddItemOptions/AddItemOptions";
-import FormField from "./FormField";
-import "./PageSection.css";
+import AddItemOptions from "../add-item-options/AddItemOptions";
+import FormField from "../form-field/FormField";
+import "../page-section/PageSection.css";
+
 import {
   DndContext,
   closestCenter,
@@ -155,18 +156,18 @@ const PageSection = (props) => {
              <MdOutlineDragIndicator/>
           </button>
         </div>
-        <div className="col-8">
+        <div className="col-11">
           <Accordion alwaysOpen>
             <Accordion.Item eventKey="0">
               <Accordion.Header>{getHeader()}</Accordion.Header>
               <Accordion.Body>
-                <div className="form-item-header-container" style={{padding:10}}>
-                  <div>
+                <div className="section-header-container" style={{padding:10}}>
+                  <div className="section-header">
                     <label htmlFor="inputPassword7" className="col-form-label">
                       Section Title
                     </label>
                   </div>
-                  <div>
+                  <div className="section-header">
                     <input
                       type="text"
                       id={"inputPassword" + props.section.id}
@@ -176,7 +177,7 @@ const PageSection = (props) => {
                       onChange={handleSectionTitleChange}
                     />
                   </div>
-                  <div>
+                  <div className="section-header">
                     <AddItemOptions data={props} operation ={operation}/>
                   </div>
                 </div>

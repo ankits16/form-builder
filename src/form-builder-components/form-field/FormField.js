@@ -1,11 +1,11 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
-import FormFieldAttribute from "./form-fields-attributes/FormFieldAttribute";
+import FormFieldAttribute from "../field-attribute/FormFieldAttribute";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import "./FormField.css";
+import "../form-field/FormField.css";
 import { MdDragIndicator, MdDelete } from "react-icons/md";
-import { PageSectionLevelOperations } from "./PageSection";
+import { PageSectionLevelOperations } from "../page-section/PageSection";
 
 export const FormFieldLevelOperation = Object.freeze({
   UpdateFieldAttribute : Symbol('updateAttribute')
@@ -26,6 +26,7 @@ export default function FormField(props) {
 
   const updateField = (impactedFieldAttributes)=>{
     let updatedField = {...props.field}
+    console.log('<<<<<< Formfield updatedField')
     console.log(updatedField)
     updatedField = Object.assign({}, updatedField,  impactedFieldAttributes)
     props.operation(PageSectionLevelOperations.UpdateField, [updatedField])

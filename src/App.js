@@ -22,23 +22,9 @@ import DragUI from "./DragUI";
 function App() {
   const [formData, setFormData] = useState(data);
 
-  const updateFormData = (updatedFormData) => {
-    setFormData(updateFormData);
-  };
-
-  console.log("app js data is ", formData);
-
   const updateFormDataFromUI = (updatedFormData) => {
     setFormData(updatedFormData);
   };
-
-  const [items, setItems] = useState([1, 2, 3]);
-  // const sensors = useSensors(
-  //   useSensor(PointerSensor),
-  //   useSensor(KeyboardSensor, {
-  //     coordinateGetter: sortableKeyboardCoordinates,
-  //   })
-  // );
 
   return (
     <>

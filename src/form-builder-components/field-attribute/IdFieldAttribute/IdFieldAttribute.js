@@ -1,5 +1,5 @@
 import React from "react";
-import { FormFieldLevelOperation } from "../../FormField";
+import { FormFieldLevelOperation } from "../../form-field/FormField";
 const IdFieldAttribute = (props) => {
   const handleChange = (event) => {
     // we have to make sure that id of each form field through out the form  is unique

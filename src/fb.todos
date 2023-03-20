@@ -11,3 +11,13 @@
 	10.	Select and Options Field type : done
 	11.	Editor id needs to be removed from UI and Json : done
     12. Delete page not working : done
+
+	#20th March
+	1. Match the UI components with Vyn app
+	2. Menu item at top
+	3. Body should occupy max height
+	4. Add depedencies
+	5. AND/OR between Dependcies
+	6. Required/Option: Check box (by default everything is required)
+	7. required, active, image capture (masx of 5 default 1), video capture
+

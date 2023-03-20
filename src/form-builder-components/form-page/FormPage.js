@@ -1,5 +1,7 @@
 import React from "react";
-import PageSection from "./PageSection/PageSection";
+import PageSection from "../page-section/PageSection";
+import "./FormPage.css";
+import { StoryboardLevelOperations } from "../storyboard/Storyboard";
 
 import {
   DndContext,
@@ -15,9 +17,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import "./FormPage.css";
-import { MainViewPortLevelOperations } from "../MainViewPort";
-
 /**
  * possible operations at page level
  * - Add section
@@ -47,13 +46,13 @@ const FormPage = (props) => {
    */
   const deletePage = () => {
     // props.formOperation("delete-page", props.page.id);
-    props.operation(MainViewPortLevelOperations.DeletePage, props.page.id);
+    props.operation(StoryboardLevelOperations.DeletePage, props.page.id);
   };
 
   const callUpdatePage = (updatedSections) => {
     let updatedPage = { ...props.page };
     updatedPage.sections = updatedSections;
-    props.operation(MainViewPortLevelOperations.UpdatePage, updatedPage);
+    props.operation(StoryboardLevelOperations.UpdatePage, updatedPage);
   };
 
   /**
@@ -131,7 +130,7 @@ const FormPage = (props) => {
   }
 
   return (
-    <div style={{ padding: 50 }}>
+   
       <div className="form-page card">
         <div className="form-page__top">
           <div className="form-page__top_item">
@@ -185,7 +184,7 @@ const FormPage = (props) => {
           </DndContext>
         </div>
       </div>
-    </div>
+  
   );
 };
 

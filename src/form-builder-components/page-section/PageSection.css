@@ -2,8 +2,10 @@
   /* display: flex; */
   /* justify-content: space-between; */
   margin: 20px;
-  border: 2px solid blue;
+  border: 2px solid rgb(255, 72, 0);
   padding: 5px;
+  border-radius: 10px;
+  
 }
 
 .page-section-item{
@@ -16,7 +18,12 @@
   margin: 10px;
 }
 
-.form-item-header-container{
+.section-header-container{
   display: flex;
-  justify-content: space-between;
+
+  /* justify-content: space-between; */
+}
+
+.section-header{
+  padding-left: 20px;
 }
