@@ -136,16 +136,6 @@ const FormPage = (props) => {
           <div className="form-page__top_item">
             <h2 style={{ color: "red" }}>Page {props.page.id}</h2>
           </div>
-
-          <div className="form-page__top_item">
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={deletePage}
-            >
-              Delete Page
-            </button>
-          </div>
           <div className="form-page__top_item">
             <button
               type="button"
@@ -155,6 +145,16 @@ const FormPage = (props) => {
               Add section
             </button>
           </div>
+          <div className="form-page__top_item">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={deletePage}
+            >
+              Delete Page
+            </button>
+          </div>
+          
         </div>
         <div className="form-page__section">
           <DndContext

@@ -3,7 +3,7 @@ import "./App.css";
 import FormBuilderHeader from "./form-builder-components/FormBuilderHeader";
 import Canvas from "./form-builder-components/canvas/Canvas";
 import { useEffect, useState } from "react";
-import data from "./sample_input_json.json";
+import data from "./rrr.json";
 import {
   DndContext,
   closestCenter,
@@ -19,6 +19,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import DragUI from "./DragUI";
+import ExportStoryboard from "./form-builder-components/export-storyboard/ExportStoryboard";
 function App() {
   const [formData, setFormData] = useState(data);
 
@@ -26,12 +27,42 @@ function App() {
     setFormData(updatedFormData);
   };
 
+  const [showExportStoryboardModal, setShowExportStoryboardModal] = useState(false)
+
+  const showStoryboardExport = ()=>{
+    console.log('<<<<<< app.js showStoryboardExport')
+    setShowExportStoryboardModal(true)
+  }
+
+  const exportJson = (fileName) => {
+    // let fileName = "json.txt"
+    console.log("exportJson " + fileName);
+    
+    let contentType = "text/plain";
+    var a = document.createElement("a");
+    var file = new Blob([JSON.stringify(formData, null, 2)], {
+      type: contentType,
+    });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+  };
+
+  const hideStoryboardExport = (fileName)=>{
+    console.log('<<<<<< app.js hideStoryboardExport')
+    setShowExportStoryboardModal(false)
+    if (fileName){
+      exportJson(fileName)
+    }
+  }
+
+  console.log('render with ' + showExportStoryboardModal)
   return (
     <>
-      <FormBuilderHeader />
+      <FormBuilderHeader showStoryboardExport ={showStoryboardExport}/>
       {/* <DragUI></DragUI> */}
       <Canvas formData={formData} formOperation={updateFormDataFromUI} />
-      
+      {showExportStoryboardModal ? <ExportStoryboard showModal={true} hideModel={hideStoryboardExport}/> : ''}
     </>
   );
 }

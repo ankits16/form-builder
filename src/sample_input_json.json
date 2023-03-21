@@ -17,7 +17,7 @@
               "view_label": "Name",
               "capture_label": "Please enter your name",
               "form_model": { "required": true,
-                "active": "s => s.age === '18'§§"}
+                "active": "s => s.age === '18'"}
             },
             {
               "editor_id": 2,

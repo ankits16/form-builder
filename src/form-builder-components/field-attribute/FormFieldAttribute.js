@@ -1,4 +1,5 @@
 import React from "react";
+import DependencyCollapsibleContainer from "../dependency-container/DependencyCollapsibleContainer";
 import DependencyContainer from "../dependency-container/DependencyContainer";
 import "./FormFieldAttribute.css";
 import IdFieldAttribute from "./IdFieldAttribute/IdFieldAttribute";
@@ -27,7 +28,7 @@ const FormFieldAttribute = (props) => {
             key={key}
             value={props.formField[key]}
             operation={props.operation}
-            data ={props.data}
+            data={props.data}
             idsMap={props.idsMap}
           />
         );
@@ -54,6 +55,7 @@ const FormFieldAttribute = (props) => {
             type="textarea"
             value={JSON.stringify(props.formField.form_model)}
             onChange={handleChange}
+            style={{ height: "100%", width: "100%" }}
           ></textarea>
         );
       default:
@@ -76,17 +78,17 @@ const FormFieldAttribute = (props) => {
     return key !== "editor_id";
   });
 
-  
-
   const getRequiredField = () => {
     return (
-      <ReqiredFieldAttribute formField ={props.formField} operation={props.operation} />
+      <ReqiredFieldAttribute
+        formField={props.formField}
+        operation={props.operation}
+      />
     );
   };
 
-
   const parseFormMode = () => {
-    return <div>{getRequiredField()}</div> ;
+    return <div>{getRequiredField()}</div>;
   };
 
   const getAttributesLayout = () => {
@@ -98,7 +100,9 @@ const FormFieldAttribute = (props) => {
               ? fieldAttributeDisplayMap[key]
               : key}
           </div>
-          <div>{getFieldAttribute(key)}</div>
+          <div style={{ width: "100%", paddingLeft: 10 }}>
+            {getFieldAttribute(key)}
+          </div>
         </div>
       );
     });
@@ -108,12 +112,18 @@ const FormFieldAttribute = (props) => {
       <>
         {parseFormMode()}
         <>{getAttributesLayout()}</>
-        <><DependencyContainer form_model={props.formField.form_model}/></>
+        <>
+          <DependencyCollapsibleContainer
+            data={props.data}
+            form_model={props.formField.form_model}
+            idsMap={props.idsMap}
+          />
+        </>
       </>
     );
   };
 
-  return (<>{prepareFieldAttributes()}</>);
+  return <>{prepareFieldAttributes()}</>;
 };
 
 export default FormFieldAttribute;

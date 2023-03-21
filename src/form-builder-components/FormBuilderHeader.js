@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import vyn_logo from "../assets/vyn-logo.png";
 const FormBuilderHeader = (props) => {
-  // const handle
+  const handleStoryboardExport = ()=>{
+    props.showStoryboardExport()
+  }
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light">
       <div className="container-fluid">
@@ -22,14 +24,14 @@ const FormBuilderHeader = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <button>New Storyboard</button>
+            <li className="nav-item" style={{padding:10}}>
+              <button className="btn btn-outline-primary">New Storyboard</button>
             </li>
-            <li className="nav-item">
-              <button>Import Storyboard</button>
+            <li className="nav-item" style={{padding:10}}>
+              <button className="btn btn-outline-primary">Import Storyboard</button>
             </li>
-            <li className="nav-item">
-              <button>Export Storyboard</button>
+            <li className="nav-item" style={{padding:10}}>
+              <button className="btn btn-outline-primary" onClick={handleStoryboardExport}>Export Storyboard</button>
             </li>
           </ul>
         </div>

@@ -148,7 +148,7 @@ const Storyboard = (props) => {
   return (
     <>
       {props.data.formData.pages.length === 0 ? (
-        <button className="btn" class="btn btn-primary" onClick={addPage}>Add Page to start</button>
+        <button className="btn btn-primary" onClick={addPage}>Add Page to start</button>
       ) : (
         <div>
           <div className="storyboard-header">
@@ -157,7 +157,7 @@ const Storyboard = (props) => {
               <input type="text" value={props.data.formData.title} onChange={handleStoryboardTitleChange}></input>
             </div>
             <div className="storyboard-header-item">
-              <button className="btn" class="btn btn-primary" onClick={addPage}>Add Page</button>
+              <button className="btn btn-primary" onClick={addPage}>Add Page</button>
             </div>
           </div>
           <Carousel

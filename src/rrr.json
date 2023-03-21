@@ -1,0 +1,121 @@
+{
+  "pages": [
+    {
+      "id": 1,
+      "sections": [
+        {
+          "position": 1,
+          "id": 1,
+          "title": "Vehicle Details",
+          "fields": [
+            {
+              "editor_id": 1,
+              "id": "vehicle-registration-number",
+              "type": "text ",
+              "view_label": "Vehicle Registration Number",
+              "capture_label": "",
+              "form_model": {
+                "required": true
+              }
+            },
+            {
+              "editor_id": 2,
+              "id": "vin-number",
+              "type": "text ",
+              "view_label": "VIN number",
+              "capture_label": "",
+              "form_model": {
+                "required": true
+              }
+            },
+            {
+              "editor_id": 3,
+              "id": "make",
+              "type": "text ",
+              "view_label": "Make",
+              "capture_label": "",
+              "form_model": {
+                "required": true
+              }
+            },
+            {
+              "editor_id": 4,
+              "id": "model",
+              "type": "text ",
+              "view_label": "Model",
+              "capture_label": "",
+              "form_model": {
+                "required": true
+              }
+            },
+            {
+              "editor_id": 5,
+              "id": "vehicle-video",
+              "type": "video ",
+              "view_label": "Vehicle Video",
+              "capture_label": "",
+              "form_model": {
+                "required": true
+              }
+            },
+            {
+              "editor_id": 7,
+              "id": "is-there-damage",
+              "type": "options",
+              "view_label": "is there damage?",
+              "capture_label": "",
+              "options": [
+                {
+                  "id": 1,
+                  "value": "yes",
+                  "label": "Yes"
+                },
+                {
+                  "id": 2,
+                  "value": "no",
+                  "label": "No"
+                }
+              ],
+              "form_model": {
+                "required": true
+              }
+            },
+            {
+              "editor_id": 8,
+              "id": "is-vehicle-insured",
+              "type": "options",
+              "view_label": "is vehicle insured?",
+              "capture_label": "",
+              "options": [
+                {
+                  "id": 1,
+                  "value": "yes",
+                  "label": "Yes"
+                },
+                {
+                  "id": 2,
+                  "value": "no",
+                  "label": "No"
+                }
+              ],
+              "form_model": {
+                "required": true
+              }
+            },
+            {
+              "editor_id": 6,
+              "id": "damage-photos",
+              "type": "image ",
+              "view_label": "damage photos",
+              "capture_label": "",
+              "form_model": {
+                "required": true,
+                "active":"s => s.is-there-damage === 'yes' && s.is-vehicle-insured === 'yes' || !!s.vehicle-registration-number"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+    "storyboard_title": "This is a storyboard!",
+  
+    "pages": [
+      {
+        "sections": [
+          {
+            "title": "General Data - page 1",
+            "fields": [
+              {
+                "id": "name",
+                "type": "text",
+                "view-label": "Name",
+                "capture-label": "Please enter your name",
+                "form-model": { "required": false}
+              },
+              {
+                "id": "consent",
+                "type": "checkbox",
+                "view-label": "Data Consent",
+                "capture-label": "Please confirm",
+                "form-model": { "required": false}
+              },
+              {
+                "id": "age",
+                "type": "quantity",
+                "view-label": "Age",
+                "capture-label": "Please enter your age",
+                "form-model": { "required": false}
+              },
+              {
+                "id": "basic_video",
+                "type": "video",
+                "view-label": "Basic Video",
+                "capture-label": "Record a video showing surrounding",
+                "form-model": {
+                  "videoCapture": {
+                    "acceptMedia": "vyn.AcceptMediaTypes.AudioVideo",
+                    "acceptMediaOptions": ["vyn.AcceptMediaTypes.AudioVideo", "vyn.AcceptMediaTypes.Video"],
+                    "canPause": false,
+                    "maxDuration": 20000,
+                    "width": 640,
+                    "height": 480,
+                    "facingMode": "vyn.FacingModes.Front",
+                    "capture_label": "Record a video showing surrounding"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section": [
+          {
+            "title": "page 2 section 1",
+            "field": [
+              {
+                "id": "select_field",
+                "type": "select",
+                "view-label": "Type of work",
+                "capture-label": "Type of work",
+                "options": [
+                  {"value": "Inspection"},
+                  {"value": "Maintenance"},
+                  {"value": "Installation"}
+              ],
+                "form-model": { "required": false}
+              },
+              {
+                "id": "basic_image",
+                "type": "image",
+                "view-label": "Basic Images",
+                "capture-label": "Capture some images",
+                "form-model": {
+                  "imageCapture": {
+                    "max": 2
+                  },
+                  "required": false
+                }
+              },
+              {
+                "id": "options_field",
+                "type": "options",
+                "view-label": "Urgency",
+                "capture-label": "Please select an urgency",
+                "options": [
+                  {"value": "High", "Label": "High", "class": "vsf-green vsf-green-border"},
+                  {"value": "Medium", "Label": "Medium", "class": "vsf-orange vsf-orange-border"},
+                  {"value": "Low", "Label": "Low", "class": "vsf-red vsf-red-border"}
+                ],
+                "form-model": { "required": false}
+              },
+              {
+                "id": "details",
+                "type": "text",
+                "view-label": "Details",
+                "capture-label": "Please enter more details",
+                "form-model": {"required": false, "active": "s => s.options_field === 'Low'"}
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
