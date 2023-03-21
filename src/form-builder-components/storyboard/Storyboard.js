@@ -66,9 +66,9 @@ const Storyboard = (props) => {
     });
     
     // setIdsMap(updatedMap)
-    console.log("$$$$$$$$$$ updateIdsMap");
-    console.log(updatedMap);
-    console.log("------- updateIdsMap");
+    // console.log("$$$$$$$$$$ updateIdsMap");
+    // console.log(updatedMap);
+    // console.log("------- updateIdsMap");
     return updatedMap
   };
 

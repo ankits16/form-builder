@@ -6,8 +6,8 @@ const IdFieldAttribute = (props) => {
   const [idConflict, setIdConflict] = useState(false);
 
   useEffect(() => {
-    console.log("<<<<<<<<<<< IdFieldAttribute + useEffect");
-    console.log(props);
+    // console.log("<<<<<<<<<<< IdFieldAttribute + useEffect");
+    // console.log(props);
     checkIfIdIsConflicting(props.value);
   }, [props.idsMap]);
 
@@ -25,17 +25,17 @@ const IdFieldAttribute = (props) => {
     //     });
     //   });
     // });
-    console.log('^^^^^^^^^^^^^^^^ checkIfIdIsConflicting')
-    console.log(props.idsMap)
-    console.log(fieldId)
-    console.log(props.idsMap[fieldId].length)
+    // console.log('^^^^^^^^^^^^^^^^ checkIfIdIsConflicting')
+    // console.log(props.idsMap)
+    // console.log(fieldId)
+    // console.log(props.idsMap[fieldId].length)
     
     if (props.idsMap[fieldId].length > 1){
       setIdConflict(true);
     }else{
       setIdConflict(false);
     }
-    console.log('========== finished checkIfIdIsConflicting')
+    // console.log('========== finished checkIfIdIsConflicting')
     
     
   };

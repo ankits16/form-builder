@@ -1,0 +1,7 @@
+.dependency{
+    display: flex;
+}
+
+.dependency-item{
+    padding: 10px;
+}

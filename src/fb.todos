@@ -15,7 +15,7 @@
 	#20th March
 	1. Match the UI components with Vyn app
 	2. Menu item at top
-	3. Body should occupy max height
+	3. Body should occupy max height : done
 	4. Add depedencies
 	5. AND/OR between Dependcies
 	6. Required/Option: Check box (by default everything is required)

@@ -15,9 +15,9 @@ const AddItemOptions = (props) => {
   const addFormField = (fieldDict) => {
     let updatedFieldDict = {...fieldDict}
     if (!updatedFieldDict.form_model){
-      updatedFieldDict.form_model = JSON.stringify({required: false})
+      updatedFieldDict.form_model = {required: true}
     }else{
-      updatedFieldDict.form_model = JSON.stringify(updatedFieldDict.form_model)
+      updatedFieldDict.form_model = updatedFieldDict.form_model
     }
     props.operation(PageSectionLevelOperations.AddField, updatedFieldDict);
   };

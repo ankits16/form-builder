@@ -1,4 +1,5 @@
 import React from "react";
+import DependencyContainer from "../dependency-container/DependencyContainer";
 import "./FormFieldAttribute.css";
 import IdFieldAttribute from "./IdFieldAttribute/IdFieldAttribute";
 import OptionsFieldsAttribute from "./OptionsFieldsAttribute/OptionsFieldsAttribute";
@@ -16,6 +17,9 @@ const FormFieldAttribute = (props) => {
   };
 
   const getFieldAttribute = (key) => {
+    console.log('<<<<<<< FormFieldAttribute getFieldAttribute ' + props.formField.id)
+    console.log(props.formField)
+    console.log('+++++++ FormFieldAttribute getFieldAttribute')
     switch (key) {
       case "id":
         return (
@@ -80,6 +84,7 @@ const FormFieldAttribute = (props) => {
     );
   };
 
+
   const parseFormMode = () => {
     return <div>{getRequiredField()}</div> ;
   };
@@ -102,7 +107,8 @@ const FormFieldAttribute = (props) => {
     return (
       <>
         {parseFormMode()}
-        <div>{getAttributesLayout()}</div>
+        <>{getAttributesLayout()}</>
+        <><DependencyContainer form_model={props.formField.form_model}/></>
       </>
     );
   };
