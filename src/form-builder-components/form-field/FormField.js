@@ -12,7 +12,6 @@ export const FormFieldLevelOperation = Object.freeze({
 })
 
 export default function FormField(props) {
-  
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = {
@@ -60,6 +59,7 @@ export default function FormField(props) {
                   key={props.index}
                   formField={props.field}
                   operation = {operation}
+                  idsMap={props.idsMap}
                 ></FormFieldAttribute>
               </Accordion.Item>
             </Accordion.Body>

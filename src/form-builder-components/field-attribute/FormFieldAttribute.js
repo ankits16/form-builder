@@ -23,6 +23,8 @@ const FormFieldAttribute = (props) => {
             key={key}
             value={props.formField[key]}
             operation={props.operation}
+            data ={props.data}
+            idsMap={props.idsMap}
           />
         );
       case "view_label":
@@ -31,6 +33,7 @@ const FormFieldAttribute = (props) => {
             key={key}
             field={props.formField}
             operation={props.operation}
+            idsMap={props.idsMap}
           />
         );
       case "options":

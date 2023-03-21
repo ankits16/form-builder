@@ -1,0 +1,12 @@
+.error-id-field{
+    border: 2px solid red;
+  border-radius: 4px;
+  background-color: rgb(236, 201, 201);
+  /* color: white; */
+}
+
+.normal-id-field{
+    border-color: black;
+    border-radius: 4px;
+    background-color: transparent;
+}

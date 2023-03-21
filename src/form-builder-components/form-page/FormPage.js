@@ -177,6 +177,7 @@ const FormPage = (props) => {
                     data={props.data}
                     operation={performOperation}
                     sensors={sensors}
+                    idsMap={props.idsMap}
                   ></PageSection>
                 );
               })}

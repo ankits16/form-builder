@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import {PageOperations} from "../form-page/FormPage"
-import FormFieldAttribute from "../field-attribute/FormFieldAttribute";
 import Accordion from "react-bootstrap/Accordion";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -37,7 +35,7 @@ export const PageSectionLevelOperations = Object.freeze({
 });
 
 const PageSection = (props) => {
-  
+
   /**
    * dnd kit sortable related
    */
@@ -175,6 +173,7 @@ const PageSection = (props) => {
                       aria-describedby="passwordHelpInline"
                       value={props.section.title}
                       onChange={handleSectionTitleChange}
+                      idsMap={props.idsMap}
                     />
                   </div>
                   <div className="section-header">
@@ -202,6 +201,7 @@ const PageSection = (props) => {
                             field={field}
                             data={props.data}
                             operation={operation}
+                            idsMap={props.idsMap}
                           ></FormField>
                           //   </Accordion.Item>
                         );

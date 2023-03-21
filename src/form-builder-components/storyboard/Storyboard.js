@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Carousel from "react-bootstrap/Carousel";
 import FormPage from "../form-page/FormPage";
@@ -23,10 +23,65 @@ const Storyboard = (props) => {
     setCurrentPageIndex(selectedIndex);
   };
 
+  const [idsMap, setIdsMap] = useState({});
+
+  const updateIdsMap = () => {
+    let updatedMap = {};
+    console.log(props);
+    props.data.formData.pages.map((page) => {
+      page.sections.map((section) => {
+        section.fields.map((field) => {
+          let existingMap = updatedMap[field.id];
+          let pageKey = page.id;
+          let sectionKey = section.id;
+          let completeKey = page.id + '::' + section.id + '::' + field.editor_id
+          if (existingMap) {
+            // let pageMap = existingMap[pageKey];
+            // if (pageMap) {
+            //   let sectionMap = pageMap[sectionKey];
+            //   if (sectionMap) {
+            //     sectionMap.push(field.editor_id);
+            //     updatedMap[field.id][pageKey][sectionKey] = sectionMap;
+            //   } else {
+            //     updatedMap[field.id][pageKey][sectionKey] = [field.editor_id];
+            //   }
+            // } else {
+            //   let sectionDict = {};
+            //   sectionDict[sectionKey] = [field.editor_id];
+            //   updatedMap[field.id][pageKey] = sectionDict;
+            // }
+            existingMap.push(completeKey)
+            updatedMap[field.id] = existingMap
+          } else {
+            // let sectionDict = {};
+            // sectionDict[sectionKey] = [field.editor_id];
+            // let dict = {};
+            // dict[pageKey] = sectionDict;
+            // updatedMap[field.id] = dict;
+
+            updatedMap[field.id] = [completeKey]
+          }
+        });
+      });
+    });
+    
+    // setIdsMap(updatedMap)
+    console.log("$$$$$$$$$$ updateIdsMap");
+    console.log(updatedMap);
+    console.log("------- updateIdsMap");
+    return updatedMap
+  };
+
+  useEffect(()=>{
+    updateIdsMap()
+  }, [])
+
+
   const updatePagesInDataSource = (pages) => {
     let updatedFormData = { ...props.formData };
     updatedFormData.pages = pages;
     props.data.formOperation(updatedFormData);
+    updateIdsMap();
   };
 
   const deletePage = (pageId) => {
@@ -74,8 +129,12 @@ const Storyboard = (props) => {
         <div>
           <div className="storyboard-header">
             <div className="storyboard-header-item">Storyboard Title</div>
-            <div className="storyboard-header-item"><input type='text'></input></div>
-            <div className="storyboard-header-item"><button className="btn">Add Page</button></div>
+            <div className="storyboard-header-item">
+              <input type="text"></input>
+            </div>
+            <div className="storyboard-header-item">
+              <button className="btn">Add Page</button>
+            </div>
           </div>
           <Carousel
             interval={null}
@@ -85,14 +144,15 @@ const Storyboard = (props) => {
           >
             {props.data.formData.pages.map((page, index) => {
               return (
-                <Carousel.Item key={index} style={{paddingBottom:50}}>
+                <Carousel.Item key={index} style={{ paddingBottom: 50 }}>
                   {
                     <FormPage
-                      data={props.data}
+                      data={props.data.formData}
                       page={page}
                       index={index}
                       key={index}
                       operation={operation}
+                      idsMap={updateIdsMap()}
                     ></FormPage>
                   }
                 </Carousel.Item>
