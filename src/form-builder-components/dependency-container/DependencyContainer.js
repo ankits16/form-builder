@@ -3,10 +3,21 @@ import Dependency from './dependency/Dependency'
 import'./DependencyContainer.css'
 const DependencyContainer = (props) => {
     const [dependencies, setDependencies] = useState([])
-
+    
     useEffect(()=>{
-        // console.log('<<<<<, DependencyContainer')
-        // console.log(props.form_model)
+        console.log('<<<<<, DependencyContainer')
+    console.log(props.form_model)
+        let updatedDependencies =[] 
+        Object.keys(props.form_model).map((key)=>{
+            if (key !== 'required'){
+                updatedDependencies.push({
+                    id:key,
+                    value:props.form_model[key]
+                })
+            }
+        })
+        setDependencies(updatedDependencies)
+
     }, [props.form_model])
     const addDependency = ()=>{
 

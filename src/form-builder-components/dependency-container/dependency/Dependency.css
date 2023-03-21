@@ -1,7 +1,12 @@
 .dependency{
     display: flex;
+    /* overflow: hidden; */
+    height: auto;
 }
 
 .dependency-item{
     padding: 10px;
+    width: 80% !important;
+    height: auto;
+    margin: 10px;
 }

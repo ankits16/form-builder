@@ -4,8 +4,8 @@ import { FormFieldLevelOperation } from "../../form-field/FormField";
 
 
 const ReqiredFieldAttribute = (props) => {
-  console.log('<<<<<<< ReqiredFieldAttribute id = ' + props.formField.id + '---- keys' + Object.keys(props.formField.form_model))
-  console.log(props.formField.form_model)
+  // console.log('<<<<<<< ReqiredFieldAttribute id = ' + props.formField.id + '---- keys' + Object.keys(props.formField.form_model))
+  // console.log(props.formField.form_model)
   const formModel =  props.formField.form_model// JSON.parse(props.formField.form_model)
   // console.log('<<<<<<< ReqiredFieldAttribute ' + props.formField.id + 'required = ' + formModel.required)
   // console.log(formModel)

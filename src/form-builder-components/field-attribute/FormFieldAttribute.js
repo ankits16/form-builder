@@ -17,9 +17,9 @@ const FormFieldAttribute = (props) => {
   };
 
   const getFieldAttribute = (key) => {
-    console.log('<<<<<<< FormFieldAttribute getFieldAttribute ' + props.formField.id)
-    console.log(props.formField)
-    console.log('+++++++ FormFieldAttribute getFieldAttribute')
+    // console.log('<<<<<<< FormFieldAttribute getFieldAttribute ' + props.formField.id)
+    // console.log(props.formField)
+    // console.log('+++++++ FormFieldAttribute getFieldAttribute')
     switch (key) {
       case "id":
         return (
