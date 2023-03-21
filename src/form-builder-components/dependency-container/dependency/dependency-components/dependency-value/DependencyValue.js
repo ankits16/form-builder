@@ -1,11 +1,13 @@
 import React, {useEffect} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { AllowedOperation, DependencyModel } from "../../Dependency";
 
 const DependencyValue = (props) => {
   useEffect(() => {
     getAssociatedField();
   }, [props.data, props.dependency]);
+
   const getAssociatedField = () => {
     let currentID = props.dependency.id ? props.dependency.id.trim() : "";
     let map = props.idsMap[currentID];
@@ -42,17 +44,52 @@ const DependencyValue = (props) => {
     return null;
   };
 
+  const calUpdateDependency = (val)=>{
+    console.log(props);
+    let updatedDependency = { ...props.dependency };
+    let id = props.dependency.id
+    let expression = "s." + id;
+    
+    // let operation = props.dependency.operation === AllowedOperation ? '!!' : '===';
+    console.log('operation is ' + props.dependency.operation);
+    if (props.dependency.operation) {
+      switch (props.dependency.operation) {
+        case AllowedOperation.IsPresent:
+          expression = "!!" + expression;
+          break;
+        default:
+          expression = expression + "===" + val;
+      }
+    } else {
+      expression = expression + "==="+ val;
+    }
+    console.log('expression is ' + expression);
+    console.log("~~~~~~~~~~ End DependencyOperation");
+    props.update(new DependencyModel(expression));
+  }
+  
+  const handleValueChangeFromDropdown = (e)=>{
+    console.log('$$$$$$$$$$$ handleValueChangeFromDropdown ');
+    console.log(e);
+    calUpdateDependency(e)  
+  }
+
+  const handleValueChangeFromText = (e)=>{
+    calUpdateDependency(e.target.value)  
+  }
+
   const getValuesDropDown = (options) => {
-    return props.dependency.operation === "IsPresent" ? (
+    return props.dependency.operation === AllowedOperation.IsPresent ? (
       ""
     ) : (
       <DropdownButton
         id="dropdown-basic-button"
         title={props.dependency.value ? props.dependency.value : "--Select--"}
+        onSelect={handleValueChangeFromDropdown}
       >
         {options.map((option) => {
           return (
-            <Dropdown.Item>{option.value}</Dropdown.Item>
+            <Dropdown.Item eventKey={option.value}>{option.value}</Dropdown.Item>
           );
         })}
       </DropdownButton>
@@ -60,24 +97,24 @@ const DependencyValue = (props) => {
   };
 
   const getControlForValue = () => {
-    if (props.dependency.operation === "IsPresent") {
+    if (props.dependency.operation === AllowedOperation.IsPresent) {
       return <></>;
     }
     let field = getAssociatedField();
     if (field) {
     //   console.log(field);
       if (field.type === "text") {
-        return <input></input>;
+        return <input onChange={handleValueChangeFromText}></input>;
       } else {
         let options = field.options;
         if (options && options.length > 0) {
           return getValuesDropDown(field.options);
         } else {
-          return <input></input>;
+          return <input onChange={handleValueChangeFromText}></input>;
         }
       }
     } else {
-      return <input></input>;
+      return <input onChange={handleValueChangeFromText}></input>;
     }
   };
 

@@ -20,15 +20,11 @@ const DependencyContainer = (props) => {
       active = active.replace('||', '<<<OR>>>')
       active = active.replace('&&', '<<<AND>>>')
       let parts = active.split(/\<<<|\>>>/);
-    //   parts = parts.filter((part) => {
-    //     return part.length > 0;
-    //   });
       console.log(parts);
       parts.map((part, index) => {
+        
         if ((index %2) == 0){
-            updatedDependencies.push(new DependencyModel(part));
-        }else{
-            updatedOperators.push(part) 
+            updatedDependencies.push(new DependencyModel(part, parts[index + 1]));
         }
         
       });
@@ -39,6 +35,10 @@ const DependencyContainer = (props) => {
 
   const addDependency = () => {
     let updatedDependencies = [...dependencies];
+    if (updatedDependencies.length > 0){
+        updatedDependencies[updatedDependencies.length -1].operator = 'AND' 
+    }
+    
     updatedDependencies.push(new DependencyModel());
     setDependencies(updatedDependencies);
   };
@@ -47,9 +47,10 @@ const DependencyContainer = (props) => {
 
   const updateOperator = (index, operator)=>{
     console.log('######## update operator at ' + index + 'with ' + operator)
-    let updatedOperations =[...operators]
-    updatedOperations[index] = operator === 0 ?'AND' : 'OR'
-    setOperators(updatedOperations)
+    let updatedDependencies = [...dependencies];
+    updatedDependencies[index].operator = operator === 0 ?'AND' : 'OR'
+    // updatedOperations[index] = operator === 0 ?'AND' : 'OR'
+    setDependencies(updatedDependencies);
   }
   return (
     <div className="dependency-container">
@@ -62,7 +63,7 @@ const DependencyContainer = (props) => {
               idsMap={props.idsMap}
               dependency={dependency}
             />
-            {(index < dependencies.length-1)? <DependencyOperator operator={operators[index]} index={index} update={updateOperator}/> : ''}
+            {dependency.operator? <DependencyOperator operator={dependency.operator} index={index} update={updateOperator}/> : ''}
           </div>
         );
       })}

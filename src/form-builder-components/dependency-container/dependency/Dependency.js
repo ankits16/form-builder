@@ -11,46 +11,67 @@ export const AllowedOperation = Object.freeze({
   IsPresent: "!!",
 });
 export class DependencyModel {
-  parseString() {
-    if (this.rawDependency.includes(AllowedOperation.Equals)) {
-      this.id = this.parts[0];
-    }
-    if (this.rawDependency.includes(AllowedOperation.IsPresent)) {
-      this.id = this.parts[1];
-    }
-
-    if (this.rawDependency.includes(AllowedOperation.Equals)) {
-      this.operation = "Equals";
-    }
-    if (this.rawDependency.includes(AllowedOperation.IsPresent)) {
-      this.operation = "IsPresent";
-    }
-    //   this.operation = "operation";
-
-    if (this.rawDependency.includes(AllowedOperation.Equals)) {
-      this.value = this.parts[1];
-    }
-    if (this.rawDependency.includes(AllowedOperation.IsPresent)) {
-      this.value = "";
-    }
+  constructor(expression, operator) {
+    this.expression = expression;
+    this.refresh();
+    this.operator = operator;
+    console.log("<<<<<<<< initializing DependencyModel ");
+    Object.keys(this).map((key) => {
+      console.log(key + " = " + this[key]);
+    });
+    // console.log('<<<<<<<< initializing DependencyModel ' + expression + 'with operator '+ operator + ' operation ' + this.operation)
+    console.log("<<<<<<<< end DependencyModel ");
   }
 
-  constructor(rawDependency) {
-    if (typeof rawDependency === "string" && rawDependency !== null) {
-      this.rawDependency = rawDependency ? rawDependency.replace("s.", "") : "";
-      this.parts = this.rawDependency.split(/\===|\!!/);
-      this.parseString();
+  refresh() {
+    console.log(
+      "<<<<<<<< initializing DependencyModel  refresh " + this.expression
+    );
+    this.id = this.getId();
+    this.operation = this.getOperation();
+    this.value = this.getvalue();
+  }
+
+  getOperation() {
+    if (this.expression && this.expression.includes("===")) {
+      return AllowedOperation.Equals;
     }
-    if (typeof rawDependency === "object" && rawDependency !== null) {
-      this.rawDependency = rawDependency;
+
+    if (this.expression && this.expression.includes("!!")) {
+      return AllowedOperation.IsPresent;
     }
+    return AllowedOperation.Equals;
+  }
+
+  getvalue() {
+    if (this.expression && this.expression.includes("===")) {
+      return this.expression.split("===")[1].trim();
+    }
+
+    if (this.expression && this.expression.includes("!!")) {
+      return null;
+    }
+    return null;
+  }
+
+  getId() {
+    if (this.expression && this.expression.includes("===")) {
+      return this.expression.split("===")[0].trim().replace("s.", "");
+    }
+
+    if (this.expression && this.expression.includes("!!")) {
+      return this.expression.trim().replace("!!s.", "");
+    }
+    return this.expression;
   }
 }
 
 const Dependency = (props) => {
-    const [currentDependency, setCurrentDependency] = useState(props.dependency)
+  const [currentDependency, setCurrentDependency] = useState(props.dependency);
   const updateDependency = (updatedDependency) => {
-    setCurrentDependency(updatedDependency)
+    console.log("======== updateDependency ");
+    console.log(updatedDependency);
+    setCurrentDependency(updatedDependency);
   };
 
   return (
@@ -72,7 +93,7 @@ const Dependency = (props) => {
       </div>
       <div className="dependency-item" style={{ background: "yellow" }}>
         <DependencyValue
-            key={props.key}
+          key={props.key}
           dependency={currentDependency}
           data={props.data}
           idsMap={props.idsMap}
