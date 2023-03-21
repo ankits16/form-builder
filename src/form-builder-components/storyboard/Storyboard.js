@@ -23,8 +23,6 @@ const Storyboard = (props) => {
     setCurrentPageIndex(selectedIndex);
   };
 
-  const [idsMap, setIdsMap] = useState({});
-
   const updateIdsMap = () => {
     let updatedMap = {};
     console.log(props);
@@ -85,6 +83,7 @@ const Storyboard = (props) => {
   };
 
   const deletePage = (pageId) => {
+    console.log('delete pageId ' + pageId)
     // let pageId = props.page.id;
     let filterdPages = props.data.formData.pages.filter((e) => {
       return e.id !== pageId;
@@ -92,7 +91,18 @@ const Storyboard = (props) => {
     filterdPages.map((page, index) => {
       page.id = index + 1;
     });
+    
+    
+    console.log('delete pageId ' + pageId)
+    console.log('num pages ' + filterdPages.length)
+    if (pageId > (filterdPages.length) ){
+      setCurrentPageIndex(0)
+    }else{
+      setCurrentPageIndex(pageId-1)
+    }
     updatePagesInDataSource(filterdPages);
+    // setCurrentPageIndex(0)
+    console.log('<<<<< move to ' + currentPageIndex)
   };
 
   const updatePage = (updatedPage) => {
@@ -121,19 +131,33 @@ const Storyboard = (props) => {
     }
   };
 
+  const addPage =()=>{
+    console.log(props.data.formData)
+    let allPages = [ ...props.data.formData.pages];
+    allPages.push({id: allPages.length +1 , sections:[]})
+    updatePagesInDataSource(allPages)
+    setCurrentPageIndex(allPages.length - 1)
+  }
+
+  const handleStoryboardTitleChange = (e)=>{
+    let updatedFormData = {...props.data.formData}
+    updatedFormData.title = e.target.value
+    props.data.formOperation(updatedFormData);
+  }
+
   return (
     <>
       {props.data.formData.pages.length === 0 ? (
-        "Add a page to start"
+        <button className="btn" class="btn btn-primary" onClick={addPage}>Add Page to start</button>
       ) : (
         <div>
           <div className="storyboard-header">
             <div className="storyboard-header-item">Storyboard Title</div>
             <div className="storyboard-header-item">
-              <input type="text"></input>
+              <input type="text" value={props.data.formData.title} onChange={handleStoryboardTitleChange}></input>
             </div>
             <div className="storyboard-header-item">
-              <button className="btn">Add Page</button>
+              <button className="btn" class="btn btn-primary" onClick={addPage}>Add Page</button>
             </div>
           </div>
           <Carousel
