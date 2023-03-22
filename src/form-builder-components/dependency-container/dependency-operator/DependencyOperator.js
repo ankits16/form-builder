@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./DependencyOperator.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { DependencyContainerLevelOperations } from "../DependencyContainer";
 
 const DependencyOperator = (props) => {
   const operations = ["AND", "OR"];
@@ -10,23 +11,19 @@ const DependencyOperator = (props) => {
   // console.log(operations.indexOf(props.operator))
   // console.log('YYYYYYYYYY DependencyOperator')
 
-  
-  const [currentOperation, setCurrentOperation] = useState(
-    operations.indexOf(props.operator) === -1
-      ? 0
-      : operations.indexOf(props.operator)
-  );
 
-  useEffect(()=>{
-    let c =operations.indexOf(props.operator) === -1
-      ? 0
-      : operations.indexOf(props.operator)
-    setCurrentOperation(c)
-  }, [props.operator])
+
+//   useEffect(()=>{
+//     let c =operations.indexOf(props.operator) === -1
+//       ? 0
+//       : operations.indexOf(props.operator)
+//     setCurrentOperation(c)
+//   }, [props.operator])
 
   const handleChange = (val) => {
     console.log(val);
-    props.update(props.index, val)
+    props.operation(DependencyContainerLevelOperations.UpdateOperator, {dependency : props.dependency, updatedOperator: operations[val]})
+    // props.update(props.index, val)
     // setCurrentOperation(val);
   };
 
@@ -34,7 +31,7 @@ const DependencyOperator = (props) => {
     <div className="operator-container">
       <DropdownButton
         id="dropdown-basic-button"
-        title={operations[currentOperation]}
+        title={props.operator}
         onSelect={handleChange}
         key={'dependency_operator_dd'+Date.now()}
       >

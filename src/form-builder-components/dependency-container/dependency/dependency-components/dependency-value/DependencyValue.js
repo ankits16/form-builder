@@ -1,12 +1,12 @@
 import React, {useEffect} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { AllowedOperation, DependencyModel } from "../../Dependency";
+import { AllowedOperation, DependencyModel } from "../../DependencyModel";
 
 const DependencyValue = (props) => {
-  useEffect(() => {
-    getAssociatedField();
-  }, [props.data, props.dependency]);
+//   useEffect(() => {
+//     getAssociatedField();
+//   }, [props.data, props.dependency]);
 
   const getAssociatedField = () => {
     let currentID = props.dependency.id ? props.dependency.id.trim() : "";
@@ -44,38 +44,21 @@ const DependencyValue = (props) => {
     return null;
   };
 
-  const calUpdateDependency = (val)=>{
+  const callUpdateDependency = (val)=>{
     console.log(props);
-    let currentDependency = props.dependency
-    let id = props.dependency.id
-    let expression = "s." + id;
-    
-    // let operation = props.dependency.operation === AllowedOperation ? '!!' : '===';
-    console.log('operation is ' + props.dependency.operation);
-    if (props.dependency.operation) {
-      switch (props.dependency.operation) {
-        case AllowedOperation.IsPresent:
-          expression = "!!" + expression;
-          break;
-        default:
-          expression = expression + "===" + val;
-      }
-    } else {
-      expression = expression + "==="+ val;
-    }
-    console.log('expression is ' + expression);
-    console.log("~~~~~~~~~~ End DependencyOperation");
-    props.update(new DependencyModel(expression,currentDependency.operator, currentDependency.dependencyUUID));
+    let currentDependency = {...props.dependency}
+    currentDependency.value = val
+    props.update(currentDependency);
   }
   
   const handleValueChangeFromDropdown = (e)=>{
     console.log('$$$$$$$$$$$ handleValueChangeFromDropdown ');
     console.log(e);
-    calUpdateDependency(e)  
+    callUpdateDependency(e)  
   }
 
   const handleValueChangeFromText = (e)=>{
-    calUpdateDependency(e.target.value)  
+    callUpdateDependency(e.target.value)  
   }
 
   const getValuesDropDown = (options) => {
@@ -104,19 +87,12 @@ const DependencyValue = (props) => {
     let field = getAssociatedField();
     if (field) {
     //   console.log(field);
-      if (field.type === "text") {
-        return <input onChange={handleValueChangeFromText}></input>;
-      } else {
-        let options = field.options;
-        if (options && options.length > 0) {
-          return getValuesDropDown(field.options);
-        } else {
-          return <input onChange={handleValueChangeFromText}></input>;
-        }
-      }
-    } else {
-      return <input onChange={handleValueChangeFromText}></input>;
+    let options = field.options;
+    if (options && options.length > 0) {
+      return getValuesDropDown(field.options);
+    } 
     }
+    return <input value={props.dependency.value} onChange={handleValueChangeFromText}></input>;
   };
 
   return <div>{getControlForValue()}</div>;

@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import DependencyOperator from "./dependency-operator/DependencyOperator";
-import Dependency, { DependencyModel } from "./dependency/Dependency";
+import Dependency from "./dependency/Dependency";
+import {
+  DependencyExpressionParser,
+  DependencyModel,
+} from "./dependency/DependencyModel";
 import DependencyOperation from "./dependency/dependency-components/dependency-operation/DependencyOperation";
 import "./DependencyContainer.css";
+
+export const DependencyContainerLevelOperations = Object.freeze({
+  UpdateDependency: Symbol("update_dependency"),
+  DeleteDependency: Symbol("update_dependency"),
+  UpdateOperator: Symbol("update_operator"),
+});
+
 const DependencyContainer = (props) => {
   const [dependencies, setDependencies] = useState([]);
   //   const [operators, setOperators] = useState([])
@@ -22,8 +33,16 @@ const DependencyContainer = (props) => {
       console.log(parts);
       parts.map((part, index) => {
         if (index % 2 == 0) {
+          let parsedExpression = new DependencyExpressionParser(part);
           updatedDependencies.push(
-            new DependencyModel(part, parts[index + 1], Date.now())
+            //constructor(id, operation, value, operator, dependencyUUID)
+            new DependencyModel(
+              parsedExpression.id,
+              parsedExpression.operation,
+              parsedExpression.value,
+              parts[index + 1],
+              Date.now()
+            )
           );
         }
       });
@@ -46,10 +65,26 @@ const DependencyContainer = (props) => {
       /**always add AND operator to the 2nd last dependency when anew dependency is added */
       updatedDependencies[updatedDependencies.length - 1].operator = "AND";
     }
-
-    updatedDependencies.push(new DependencyModel(null, null, Date.now()));
+    //constructor(id, operation, value, operator, dependencyUUID)
+    updatedDependencies.push(new DependencyModel());
     console.log("<<<< addDependency ");
     console.log(updatedDependencies);
+    setDependencies(updatedDependencies);
+  };
+
+  /**
+   * update dependency
+   */
+
+  const updateDependency = (updatedDependency) => {
+    let updatedDependencies = [...dependencies];
+    let indexOfUpdatedDependency = -1;
+    dependencies.map((dependecy, index) => {
+      if (dependecy.dependencyUUID === updatedDependency.dependencyUUID) {
+        indexOfUpdatedDependency = index;
+      }
+    });
+    updatedDependencies.splice(indexOfUpdatedDependency, 1, updatedDependency);
     setDependencies(updatedDependencies);
   };
 
@@ -66,32 +101,57 @@ const DependencyContainer = (props) => {
     setDependencies(updatedDependencies);
   };
 
-  const updateOperator = (index, operator) => {
-    console.log("######## update operator at " + index + "with " + operator);
+  const updateOperator = (params) => {
+    let dependency = params.dependency
+    let operator = params.updatedOperator
     let updatedDependencies = [...dependencies];
-    updatedDependencies[index].operator = operator === 0 ? "AND" : "OR";
-    // updatedOperations[index] = operator === 0 ?'AND' : 'OR'
+    updatedDependencies.map((d)=>{
+        if (dependency.dependencyUUID === d.dependencyUUID){
+            d.operator = operator
+        }
+    })
     setDependencies(updatedDependencies);
   };
+
+  const handleChangesInDependency = (operationType, params) => {
+    switch (operationType) {
+      case DependencyContainerLevelOperations.UpdateDependency:
+        console.log("update dependency");
+        updateDependency(params);
+        break;
+      case DependencyContainerLevelOperations.DeleteDependency:
+        console.log("delete dependency");
+        deleteDependency(params);
+        break;
+      case DependencyContainerLevelOperations.UpdateOperator:
+        updateOperator(params);
+        break;
+      default:
+        console.error(
+          "Unable to handle DependencyContainerLevelOperations" + operationType
+        );
+    }
+  };
+
   return (
     <div className="dependency-container">
       {dependencies.map((dependency, index) => {
         return (
-          <div key={"empty" + index}>
+          <div key={"dependency_container_empty" + index}>
             <Dependency
               key={"dependency" + index}
               data={props.data}
               form_ids_map={props.form_ids_map}
               dependency={dependency}
-              delete={deleteDependency}
               index={index}
+              operation={handleChangesInDependency}
             />
             {dependency.operator ? (
               <DependencyOperator
                 key={"dependency_operator" + index}
+                dependency={dependency}
                 operator={dependency.operator}
-                index={index}
-                update={updateOperator}
+                operation={handleChangesInDependency}
               />
             ) : (
               <></>
