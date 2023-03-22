@@ -9,7 +9,7 @@ const IdFieldAttribute = (props) => {
     // console.log("<<<<<<<<<<< IdFieldAttribute + useEffect");
     // console.log(props);
     checkIfIdIsConflicting(props.value);
-  }, [props.idsMap]);
+  }, [props.form_ids_map]);
 
   const checkIfIdIsConflicting = (fieldId) => {
     var ids = [];
@@ -30,7 +30,7 @@ const IdFieldAttribute = (props) => {
     // console.log(fieldId)
     // console.log(props.idsMap[fieldId].length)
     
-    if (props.idsMap[fieldId].length > 1){
+    if (props.form_ids_map[fieldId].length > 1){
       setIdConflict(true);
     }else{
       setIdConflict(false);

@@ -36,9 +36,10 @@ const DependencyOperator = (props) => {
         id="dropdown-basic-button"
         title={operations[currentOperation]}
         onSelect={handleChange}
+        key={'dependency_operator_dd'+Date.now()}
       >
         {operations.map((id, index) => {
-          return <Dropdown.Item eventKey={index}>{id}</Dropdown.Item>;
+          return <Dropdown.Item  key={'dependency_operator_dd_item' +index} eventKey={index}>{id}</Dropdown.Item>;
         })}
       </DropdownButton>
     </div>

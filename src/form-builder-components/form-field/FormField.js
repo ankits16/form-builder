@@ -59,7 +59,7 @@ export default function FormField(props) {
                   key={props.index}
                   formField={props.field}
                   operation = {operation}
-                  idsMap={props.idsMap}
+                  form_ids_map={props.form_ids_map}
                 ></FormFieldAttribute>
               </Accordion.Item>
             </Accordion.Body>

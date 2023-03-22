@@ -10,7 +10,7 @@ const DependencyValue = (props) => {
 
   const getAssociatedField = () => {
     let currentID = props.dependency.id ? props.dependency.id.trim() : "";
-    let map = props.idsMap[currentID];
+    let map = props.form_ids_map[currentID];
     // console.log("*************** getAssociatedField " + currentID);
     // console.log(props.idsMap);
     if (map) {
@@ -46,7 +46,7 @@ const DependencyValue = (props) => {
 
   const calUpdateDependency = (val)=>{
     console.log(props);
-    let updatedDependency = { ...props.dependency };
+    let currentDependency = props.dependency
     let id = props.dependency.id
     let expression = "s." + id;
     
@@ -65,7 +65,7 @@ const DependencyValue = (props) => {
     }
     console.log('expression is ' + expression);
     console.log("~~~~~~~~~~ End DependencyOperation");
-    props.update(new DependencyModel(expression));
+    props.update(new DependencyModel(expression,currentDependency.operator, currentDependency.dependencyUUID));
   }
   
   const handleValueChangeFromDropdown = (e)=>{
@@ -83,13 +83,14 @@ const DependencyValue = (props) => {
       ""
     ) : (
       <DropdownButton
+      key={'d_dv_dd'+Date.now()}
         id="dropdown-basic-button"
         title={props.dependency.value ? props.dependency.value : "--Select--"}
         onSelect={handleValueChangeFromDropdown}
       >
-        {options.map((option) => {
+        {options.map((option, index) => {
           return (
-            <Dropdown.Item eventKey={option.value}>{option.value}</Dropdown.Item>
+            <Dropdown.Item key={'d_dv_dd_item'+index} eventKey={option.value}>{option.value}</Dropdown.Item>
           );
         })}
       </DropdownButton>

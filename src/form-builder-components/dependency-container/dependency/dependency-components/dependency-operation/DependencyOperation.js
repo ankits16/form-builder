@@ -8,7 +8,7 @@ const DependencyOperation = (props) => {
     console.log("handleIdSelection " + e);
     console.log("~~~~~~~~~~DependencyOperation");
     console.log(props);
-    let updatedDependency = { ...props.dependency };
+    let currentDependency = props.dependency
     let id = props.dependency.id
     let expression = "s." + id;
     let operation = e === 'IsPresent' ? '!!' : '===';
@@ -26,7 +26,7 @@ const DependencyOperation = (props) => {
     }
     console.log('expression is ' + expression);
     console.log("~~~~~~~~~~ End DependencyOperation");
-    props.update(new DependencyModel(expression));
+    props.update(new DependencyModel(expression, currentDependency.operator, currentDependency.dependencyUUID));
   };
 
   const getOperationLabel = (operation) => {
@@ -42,6 +42,7 @@ const DependencyOperation = (props) => {
   const getOperationsDown = () => {
     return (
       <DropdownButton
+      key={'d_do_dd'+Date.now()}
         id="dropdown-basic-button"
         title={
           props.dependency.operation
@@ -50,8 +51,8 @@ const DependencyOperation = (props) => {
         }
         onSelect={handleOperationSelection}
       >
-        {Object.keys(AllowedOperation).map((id) => {
-          return <Dropdown.Item eventKey={id}>{id}</Dropdown.Item>;
+        {Object.keys(AllowedOperation).map((id, index) => {
+          return <Dropdown.Item  key={'d_do_dd_item'+index} eventKey={id}>{id}</Dropdown.Item>;
         })}
       </DropdownButton>
     );

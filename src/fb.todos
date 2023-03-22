@@ -21,4 +21,7 @@
 	6. Required/Option: Check box (by default everything is required)
 	7. required, active, image capture (masx of 5 default 1), video capture
 	8. Use _ in slugify
+	9. id, operation, value = dependency
+	10. operations ={Equals ===, isPresent = !!}
+	
 

@@ -5,65 +5,97 @@ import DependencyOperation from "./dependency/dependency-components/dependency-o
 import "./DependencyContainer.css";
 const DependencyContainer = (props) => {
   const [dependencies, setDependencies] = useState([]);
-  const [operators, setOperators] = useState([])
+  //   const [operators, setOperators] = useState([])
 
   useEffect(() => {
     console.log("<<<<<, DependencyContainer");
     let updatedDependencies = [];
-    let updatedOperators = []
     console.log(
       props.form_model.active ? props.form_model.active : "No active"
     );
     let active = props.form_model.active;
     if (active) {
       active = active.replace("s => ", "");
-      active = active.replace('||', '<<<OR>>>')
-      active = active.replace('&&', '<<<AND>>>')
+      active = active.replace("||", "<<<OR>>>");
+      active = active.replace("&&", "<<<AND>>>");
       let parts = active.split(/\<<<|\>>>/);
       console.log(parts);
       parts.map((part, index) => {
-        
-        if ((index %2) == 0){
-            updatedDependencies.push(new DependencyModel(part, parts[index + 1]));
+        if (index % 2 == 0) {
+          updatedDependencies.push(
+            new DependencyModel(part, parts[index + 1], Date.now())
+          );
         }
-        
       });
     }
     setDependencies(updatedDependencies);
-    setOperators(updatedOperators);
   }, [props.form_model]);
 
+  //   useEffect(() => {
+  //     console.log("<<<<<< update dependencies hook");
+  //     console.log(dependencies);
+  //     // setDependencies(dependencies);
+  //   }, [dependencies]);
+
+  /**
+   * add dependency
+   */
   const addDependency = () => {
     let updatedDependencies = [...dependencies];
-    if (updatedDependencies.length > 0){
-        updatedDependencies[updatedDependencies.length -1].operator = 'AND' 
+    if (updatedDependencies.length > 0) {
+      /**always add AND operator to the 2nd last dependency when anew dependency is added */
+      updatedDependencies[updatedDependencies.length - 1].operator = "AND";
     }
-    
-    updatedDependencies.push(new DependencyModel());
+
+    updatedDependencies.push(new DependencyModel(null, null, Date.now()));
+    console.log("<<<< addDependency ");
+    console.log(updatedDependencies);
     setDependencies(updatedDependencies);
   };
 
-  const DeleteDependency = () => {};
-
-  const updateOperator = (index, operator)=>{
-    console.log('######## update operator at ' + index + 'with ' + operator)
+  /**
+   * deletes a dependency
+   */
+  const deleteDependency = (dependency) => {
+    console.log("<<<< delete dependency at " + dependency.dependencyUUID);
     let updatedDependencies = [...dependencies];
-    updatedDependencies[index].operator = operator === 0 ?'AND' : 'OR'
+    updatedDependencies = dependencies.filter((d) => {
+      return dependency.dependencyUUID != d.dependencyUUID;
+    });
+    console.log(updatedDependencies);
+    setDependencies(updatedDependencies);
+  };
+
+  const updateOperator = (index, operator) => {
+    console.log("######## update operator at " + index + "with " + operator);
+    let updatedDependencies = [...dependencies];
+    updatedDependencies[index].operator = operator === 0 ? "AND" : "OR";
     // updatedOperations[index] = operator === 0 ?'AND' : 'OR'
     setDependencies(updatedDependencies);
-  }
+  };
   return (
     <div className="dependency-container">
       {dependencies.map((dependency, index) => {
         return (
-          <div>
+          <div key={"empty" + index}>
             <Dependency
-            key={index}
+              key={"dependency" + index}
               data={props.data}
-              idsMap={props.idsMap}
+              form_ids_map={props.form_ids_map}
               dependency={dependency}
+              delete={deleteDependency}
+              index={index}
             />
-            {dependency.operator? <DependencyOperator operator={dependency.operator} index={index} update={updateOperator}/> : ''}
+            {dependency.operator ? (
+              <DependencyOperator
+                key={"dependency_operator" + index}
+                operator={dependency.operator}
+                index={index}
+                update={updateOperator}
+              />
+            ) : (
+              <></>
+            )}
           </div>
         );
       })}

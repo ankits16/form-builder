@@ -6,6 +6,7 @@ import IdFieldAttribute from "./IdFieldAttribute/IdFieldAttribute";
 import OptionsFieldsAttribute from "./OptionsFieldsAttribute/OptionsFieldsAttribute";
 import ReqiredFieldAttribute from "./ReqiredFieldAttribute/ReqiredFieldAttribute";
 import ViewLabelFieldAttribute from "./ViewLabelFieldAttribute/ViewLabelFieldAttribute";
+
 const FormFieldAttribute = (props) => {
   const fieldAttributeDisplayMap = {
     id: "Id",
@@ -29,7 +30,7 @@ const FormFieldAttribute = (props) => {
             value={props.formField[key]}
             operation={props.operation}
             data={props.data}
-            idsMap={props.idsMap}
+            form_ids_map={props.form_ids_map}
           />
         );
       case "view_label":
@@ -38,12 +39,13 @@ const FormFieldAttribute = (props) => {
             key={key}
             field={props.formField}
             operation={props.operation}
-            idsMap={props.idsMap}
+            form_ids_map={props.form_ids_map}
           />
         );
       case "options":
         return (
           <OptionsFieldsAttribute
+            key={key}
             field={props.formField}
             operation={props.operation}
           />
@@ -81,6 +83,7 @@ const FormFieldAttribute = (props) => {
   const getRequiredField = () => {
     return (
       <ReqiredFieldAttribute
+        key={'required_field_attribute'+Date.now()}
         formField={props.formField}
         operation={props.operation}
       />
@@ -88,13 +91,13 @@ const FormFieldAttribute = (props) => {
   };
 
   const parseFormMode = () => {
-    return <div>{getRequiredField()}</div>;
+    return <div key={'required_field_container'+Date.now()}>{getRequiredField()}</div>;
   };
 
   const getAttributesLayout = () => {
-    return keys.map((key) => {
+    return keys.map((key, index) => {
       return (
-        <div className="form-field-attribute-container">
+        <div key= {'field_attribute'+index} className="form-field-attribute-container">
           <div>
             {fieldAttributeDisplayMap[key]
               ? fieldAttributeDisplayMap[key]
@@ -107,19 +110,21 @@ const FormFieldAttribute = (props) => {
       );
     });
   };
+
+  const handleFormModelAfterDependencyUpdate = (dependencies) => {};
   const prepareFieldAttributes = () => {
     return (
-      <>
+      <div key={"l1" + Date.now()}>
         {parseFormMode()}
-        <>{getAttributesLayout()}</>
-        <>
-          <DependencyCollapsibleContainer
-            data={props.data}
-            form_model={props.formField.form_model}
-            idsMap={props.idsMap}
-          />
-        </>
-      </>
+        <div key={"att_layout" + Date.now()}>{getAttributesLayout()}</div>
+        <DependencyCollapsibleContainer
+          key={"dcc" + Date.now()}
+          data={props.data}
+          form_model={props.formField.form_model}
+          form_ids_map={props.form_ids_map}
+          update={handleFormModelAfterDependencyUpdate}
+        />
+      </div>
     );
   };
 

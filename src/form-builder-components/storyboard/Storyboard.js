@@ -176,7 +176,7 @@ const Storyboard = (props) => {
                       index={index}
                       key={index}
                       operation={operation}
-                      idsMap={updateIdsMap()}
+                      form_ids_map={updateIdsMap()}
                     ></FormPage>
                   }
                 </Carousel.Item>

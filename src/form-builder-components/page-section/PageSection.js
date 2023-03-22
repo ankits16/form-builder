@@ -173,7 +173,7 @@ const PageSection = (props) => {
                       aria-describedby="passwordHelpInline"
                       value={props.section.title}
                       onChange={handleSectionTitleChange}
-                      idsMap={props.idsMap}
+                      form_ids_map={props.form_ids_map}
                     />
                   </div>
                   <div className="section-header">
@@ -201,7 +201,7 @@ const PageSection = (props) => {
                             field={field}
                             data={props.data}
                             operation={operation}
-                            idsMap={props.idsMap}
+                            form_ids_map={props.form_ids_map}
                           ></FormField>
                           //   </Accordion.Item>
                         );
