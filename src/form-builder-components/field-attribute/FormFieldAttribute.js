@@ -3,8 +3,10 @@ import DependencyCollapsibleContainer from "../dependency-container/DependencyCo
 import DependencyContainer from "../dependency-container/DependencyContainer";
 import "./FormFieldAttribute.css";
 import IdFieldAttribute from "./IdFieldAttribute/IdFieldAttribute";
+import ImageAttribute from "./ImageAttribute/ImageAttribute";
 import OptionsFieldsAttribute from "./OptionsFieldsAttribute/OptionsFieldsAttribute";
 import ReqiredFieldAttribute from "./ReqiredFieldAttribute/ReqiredFieldAttribute";
+import VideoAttribute from "./VideoAttribute/VideoAttribute";
 import ViewLabelFieldAttribute from "./ViewLabelFieldAttribute/ViewLabelFieldAttribute";
 
 const FormFieldAttribute = (props) => {
@@ -57,7 +59,7 @@ const FormFieldAttribute = (props) => {
             type="textarea"
             value={JSON.stringify(props.formField.form_model)}
             onChange={handleChange}
-            style={{ height: "100%", width: "100%" }}
+            style={{ height: "100%", width: "100%", textAlign:'justify' }}
           ></textarea>
         );
       default:
@@ -80,24 +82,29 @@ const FormFieldAttribute = (props) => {
     return key !== "editor_id";
   });
 
+  /**
+   * manage Required checkbox for form fields
+   */
   const getRequiredField = () => {
     return (
       <ReqiredFieldAttribute
-        key={'required_field_attribute'+Date.now()}
+        key={"required_field_attribute" + Date.now()}
         formField={props.formField}
         operation={props.operation}
       />
     );
   };
 
-  const parseFormMode = () => {
-    return <div key={'required_field_container'+Date.now()}>{getRequiredField()}</div>;
-  };
-
+  /**
+   * manage layout of common attributes for all fields
+   */
   const getAttributesLayout = () => {
     return keys.map((key, index) => {
       return (
-        <div key= {'field_attribute'+index} className="form-field-attribute-container">
+        <div
+          key={"field_attribute" + index}
+          className="form-field-attribute-container"
+        >
           <div>
             {fieldAttributeDisplayMap[key]
               ? fieldAttributeDisplayMap[key]
@@ -111,12 +118,43 @@ const FormFieldAttribute = (props) => {
     });
   };
 
+  /**
+   * manage layout of special field usually in form model eg: videoCapture, imageCapture
+   */
+  const addFormFieldSpecificAttributesIfRequired = () => {
+    let type = props.formField.type.trim();
+    console.log('--------addFormFieldSpecificAttributesIfRequired - ' + type)
+    console.log(props)
+    if (type === "video") {
+      return (
+          <VideoAttribute data={props.data} />
+      );
+    }
+
+    if (type === "image") {
+      return (
+          <ImageAttribute data={props.data} videoAttributes={props.formField.form_model.videoCapture}/>
+      );
+    }
+
+    return (
+      <>
+        <p>{type}</p>
+      </>
+    );
+  };
+
   const handleFormModelAfterDependencyUpdate = (dependencies) => {};
+
   const prepareFieldAttributes = () => {
     return (
       <div key={"l1" + Date.now()}>
-        {parseFormMode()}
-        <div key={"att_layout" + Date.now()}>{getAttributesLayout()}</div>
+        {getRequiredField()}
+        <div style={{padding: 10}} key={"att_layout" + Date.now()}>{getAttributesLayout()}</div>
+        <div style={{padding: 10}} key={"special_att_layout" + Date.now()}>
+          {addFormFieldSpecificAttributesIfRequired()}
+        </div>
+        <div style={{padding: 10}} key={"dependency_layout" + Date.now()}>
         <DependencyCollapsibleContainer
           key={"dcc" + Date.now()}
           data={props.data}
@@ -124,6 +162,7 @@ const FormFieldAttribute = (props) => {
           form_ids_map={props.form_ids_map}
           update={handleFormModelAfterDependencyUpdate}
         />
+        </div>
       </div>
     );
   };

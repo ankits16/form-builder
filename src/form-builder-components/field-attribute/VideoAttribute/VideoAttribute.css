@@ -1,0 +1,12 @@
+.video-attribute-item{
+    display: flex;
+    
+}
+
+.video-attribute-item-key{
+    padding: 10px;
+    align-items: center;
+}
+.video-attribute-item-value{
+    padding: 10px;
+}

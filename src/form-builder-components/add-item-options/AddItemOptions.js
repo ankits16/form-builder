@@ -51,7 +51,19 @@ const AddItemOptions = (props) => {
       type: "video ",
       view_label: "",
       capture_label: "",
-      form_model: "",
+      form_model: {
+        videoCapture: {
+          acceptMedia: "vyn.AcceptMediaTypes.AudioVideo",
+          acceptMediaOptions: ["vyn.AcceptMediaTypes.AudioVideo", "vyn.AcceptMediaTypes.Video"],
+          canPause: false,
+          maxDuration: 20000,
+          width: 640,
+          height: 480,
+          facingMode: "vyn.FacingModes.Front",
+          capture_label: "'Record a video showing surroundin'"
+        },
+        "required": false
+      },
     });
   };
 
