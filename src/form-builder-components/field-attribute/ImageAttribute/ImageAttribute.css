@@ -1,0 +1,11 @@
+.image-attribute-item{
+    display: flex;
+}
+
+.image-attribute-item-key{
+    padding: 10px;
+    align-items: center;
+}
+.image-attribute-item-value{
+    padding: 10px;
+}

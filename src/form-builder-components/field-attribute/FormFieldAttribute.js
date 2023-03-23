@@ -1,6 +1,7 @@
 import React from "react";
 import DependencyCollapsibleContainer from "../dependency-container/DependencyCollapsibleContainer";
 import DependencyContainer from "../dependency-container/DependencyContainer";
+import { FormFieldLevelOperation } from "../form-field/FormField";
 import "./FormFieldAttribute.css";
 import IdFieldAttribute from "./IdFieldAttribute/IdFieldAttribute";
 import ImageAttribute from "./ImageAttribute/ImageAttribute";
@@ -59,7 +60,7 @@ const FormFieldAttribute = (props) => {
             type="textarea"
             value={JSON.stringify(props.formField.form_model)}
             onChange={handleChange}
-            style={{ height: "100%", width: "100%", textAlign:'justify' }}
+            style={{ height: "100%", width: "100%", textAlign: "justify" }}
           ></textarea>
         );
       default:
@@ -118,22 +119,40 @@ const FormFieldAttribute = (props) => {
     });
   };
 
+  const handleFormModelUpdateFromSpecifiFields = (key, updatedAttributes) => {
+    var updatedFormModel = {...props.formField.form_model}
+    updatedFormModel[key] = updatedAttributes
+    console.log(updatedFormModel)
+    props.operation(
+        FormFieldLevelOperation.UpdateFieldAttribute,
+        {'form_model' : updatedFormModel}
+      );
+  };
+
   /**
    * manage layout of special field usually in form model eg: videoCapture, imageCapture
    */
   const addFormFieldSpecificAttributesIfRequired = () => {
     let type = props.formField.type.trim();
-    console.log('--------addFormFieldSpecificAttributesIfRequired - ' + type)
-    console.log(props)
+    console.log("--------addFormFieldSpecificAttributesIfRequired - " + type);
+    console.log(props);
     if (type === "video") {
       return (
-          <VideoAttribute data={props.data} />
+        <VideoAttribute
+          data={props.data}
+          videoAttributes={props.formField.form_model.videoCapture}
+          update={handleFormModelUpdateFromSpecifiFields}
+        />
       );
     }
 
     if (type === "image") {
       return (
-          <ImageAttribute data={props.data} videoAttributes={props.formField.form_model.videoCapture}/>
+        <ImageAttribute
+          data={props.data}
+          imageAttributes={props.formField.form_model.imageCapture}
+          update={handleFormModelUpdateFromSpecifiFields}
+        />
       );
     }
 
@@ -150,18 +169,20 @@ const FormFieldAttribute = (props) => {
     return (
       <div key={"l1" + Date.now()}>
         {getRequiredField()}
-        <div style={{padding: 10}} key={"att_layout" + Date.now()}>{getAttributesLayout()}</div>
-        <div style={{padding: 10}} key={"special_att_layout" + Date.now()}>
+        <div style={{ padding: 10 }} key={"att_layout" + Date.now()}>
+          {getAttributesLayout()}
+        </div>
+        <div style={{ padding: 10 }} key={"special_att_layout" + Date.now()}>
           {addFormFieldSpecificAttributesIfRequired()}
         </div>
-        <div style={{padding: 10}} key={"dependency_layout" + Date.now()}>
-        <DependencyCollapsibleContainer
-          key={"dcc" + Date.now()}
-          data={props.data}
-          form_model={props.formField.form_model}
-          form_ids_map={props.form_ids_map}
-          update={handleFormModelAfterDependencyUpdate}
-        />
+        <div style={{ padding: 10 }} key={"dependency_layout" + Date.now()}>
+          <DependencyCollapsibleContainer
+            key={"dcc" + Date.now()}
+            data={props.data}
+            form_model={props.formField.form_model}
+            form_ids_map={props.form_ids_map}
+            update={handleFormModelAfterDependencyUpdate}
+          />
         </div>
       </div>
     );

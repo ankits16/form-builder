@@ -4,7 +4,6 @@ import { MdFormatListBulletedAdd } from "react-icons/md";
 import { PageSectionLevelOperations } from "../page-section/PageSection";
 
 const AddItemOptions = (props) => {
-  
   const getNewFormFieldId = () => {
     console.log(props);
     let newFieldEditorId = props.data.section.fields.length + 1;
@@ -13,11 +12,11 @@ const AddItemOptions = (props) => {
   };
 
   const addFormField = (fieldDict) => {
-    let updatedFieldDict = {...fieldDict}
-    if (!updatedFieldDict.form_model){
-      updatedFieldDict.form_model = {required: true}
-    }else{
-      updatedFieldDict.form_model = updatedFieldDict.form_model
+    let updatedFieldDict = { ...fieldDict };
+    if (!updatedFieldDict.form_model) {
+      updatedFieldDict.form_model = { required: true };
+    } else {
+      updatedFieldDict.form_model = updatedFieldDict.form_model;
     }
     props.operation(PageSectionLevelOperations.AddField, updatedFieldDict);
   };
@@ -40,7 +39,11 @@ const AddItemOptions = (props) => {
       type: "image ",
       view_label: "",
       capture_label: "",
-      form_model: "",
+      form_model: {
+        imageCapture: {
+          max: 10,
+        },
+      },
     });
   };
 
@@ -54,15 +57,18 @@ const AddItemOptions = (props) => {
       form_model: {
         videoCapture: {
           acceptMedia: "vyn.AcceptMediaTypes.AudioVideo",
-          acceptMediaOptions: ["vyn.AcceptMediaTypes.AudioVideo", "vyn.AcceptMediaTypes.Video"],
+          acceptMediaOptions: [
+            "vyn.AcceptMediaTypes.AudioVideo",
+            "vyn.AcceptMediaTypes.Video",
+          ],
           canPause: false,
           maxDuration: 20000,
           width: 640,
           height: 480,
           facingMode: "vyn.FacingModes.Front",
-          capture_label: "'Record a video showing surroundin'"
+          capture_label: "'Record a video showing surroundin'",
         },
-        "required": false
+        required: false,
       },
     });
   };
@@ -96,7 +102,7 @@ const AddItemOptions = (props) => {
       type: "select",
       view_label: "",
       capture_label: "",
-      options:[],
+      options: [],
       form_model: "",
     });
   };
@@ -108,7 +114,7 @@ const AddItemOptions = (props) => {
       type: "options",
       view_label: "",
       capture_label: "",
-      options:[],
+      options: [],
       form_model: "",
     });
   };

@@ -40,6 +40,7 @@ const VideoAttribute = (props) => {
     let updatedAttriutes = {...currentVideoAttributes}
     updatedAttriutes.acceptMedia = e
     setCurrentVideoAttributes(updatedAttriutes)
+    props.update('videoCapture', updatedAttriutes)
   };
   const getMediaTypePicker = () => {
     let key = currentVideoAttributes.acceptMedia
@@ -77,6 +78,7 @@ const VideoAttribute = (props) => {
     let updatedAttriutes = {...currentVideoAttributes}
     updatedAttriutes.canPause = e == 0 ? true : false
     setCurrentVideoAttributes(updatedAttriutes)
+    props.update('videoCapture', updatedAttriutes)
   };
 
   const canPause = ["True", "False"];
@@ -114,6 +116,7 @@ const VideoAttribute = (props) => {
     updatedAttributes[key] = e.target.value;
     console.log(updatedAttributes);
     setCurrentVideoAttributes(updatedAttributes);
+    props.update('videoCapture', updatedAttributes)
   };
   const getMaxDurationInput = () => {
     return (
@@ -160,9 +163,10 @@ const VideoAttribute = (props) => {
   };
 
   const handleCameraTypePickerSelection =(e)=>{
-    let updatedAttriutes = {...currentVideoAttributes}
-    updatedAttriutes.facingMode = e
-    setCurrentVideoAttributes(updatedAttriutes)
+    let updatedAttributes = {...currentVideoAttributes}
+    updatedAttributes.facingMode = e
+    setCurrentVideoAttributes(updatedAttributes)
+    props.update('videoCapture', updatedAttributes)
   }
   const getCameraTypePicker = () => {
     let key = currentVideoAttributes.facingMode
