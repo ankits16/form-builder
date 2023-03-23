@@ -139,6 +139,7 @@ const FormFieldAttribute = (props) => {
     if (type === "video") {
       return (
         <VideoAttribute
+        index={props.index}
           data={props.data}
           videoAttributes={props.formField.form_model.videoCapture}
           update={handleFormModelUpdateFromSpecifiFields}
@@ -149,6 +150,7 @@ const FormFieldAttribute = (props) => {
     if (type === "image") {
       return (
         <ImageAttribute
+          index={props.index}
           data={props.data}
           imageAttributes={props.formField.form_model.imageCapture}
           update={handleFormModelUpdateFromSpecifiFields}
@@ -167,17 +169,17 @@ const FormFieldAttribute = (props) => {
 
   const prepareFieldAttributes = () => {
     return (
-      <div key={"l1" + Date.now()}>
+      <div key={"l1" + props.index}>
         {getRequiredField()}
-        <div style={{ padding: 10 }} key={"att_layout" + Date.now()}>
+        <div style={{ padding: 10 }} /*key={"att_layout" + Date.now()}*/>
           {getAttributesLayout()}
         </div>
-        <div style={{ padding: 10 }} key={"special_att_layout" + Date.now()}>
+        <div style={{ padding: 10 }} /*key={"special_att_layout" + Date.now()}*/>
           {addFormFieldSpecificAttributesIfRequired()}
         </div>
-        <div style={{ padding: 10 }} key={"dependency_layout" + Date.now()}>
+        <div style={{ padding: 10 }} /*key={"dependency_layout" + Date.now()}*/>
           <DependencyCollapsibleContainer
-            key={"dcc" + Date.now()}
+            key={"dcc" + props.index}
             data={props.data}
             form_model={props.formField.form_model}
             form_ids_map={props.form_ids_map}

@@ -46,7 +46,7 @@ const VideoAttribute = (props) => {
     let key = currentVideoAttributes.acceptMedia
     let title = displayableMediaTypeLabels[key]
     return (
-      <div key ={'va_mt_'+Date.now()} className="video-attribute-item">
+      <div key ={'va_mt_'+props.index} className="video-attribute-item">
         <div className="video-attribute-item-key">
           {displayLabels.acceptMediaOptions}
         </div>
@@ -55,7 +55,7 @@ const VideoAttribute = (props) => {
             id="dropdown-basic-button"
             title={title}
             onSelect={handleMediaTypeSelection}
-            key={"va_media_type_dd" + Date.now()}
+            key={"va_media_type_dd" + props.index}
           >
             {currentVideoAttributes.acceptMediaOptions.map((id, index) => {
               return (
@@ -84,14 +84,14 @@ const VideoAttribute = (props) => {
   const canPause = ["True", "False"];
   const getCanPausePicker = () => {
     return (
-      <div key ={'va_cp_'+Date.now()} className="video-attribute-item">
+      <div key ={'va_cp_'+props.index} className="video-attribute-item">
         <div className="video-attribute-item-key">{displayLabels.canPause}</div>
         <div className="video-attribute-item-value">
           <DropdownButton
             id="dropdown-basic-button"
             title={currentVideoAttributes.canPause === true ? "True" : "False"}
             onSelect={handleCanPauseSelection}
-            key={"va_media_type_dd" + Date.now()}
+            key={"va_media_type_dd" + props.index}
           >
             {canPause.map((id, index) => {
               return (
@@ -120,7 +120,7 @@ const VideoAttribute = (props) => {
   };
   const getMaxDurationInput = () => {
     return (
-      <div key ={'va_md_'+Date.now()} className="video-attribute-item">
+      <div key ={'va_md_'+ props.index} className="video-attribute-item">
         <div className="video-attribute-item-key">
           {displayLabels.maxDuration}
         </div>
@@ -137,7 +137,7 @@ const VideoAttribute = (props) => {
 
   const getWidthInput = () => {
     return (
-      <div key ={'va_width_'+Date.now()} className="video-attribute-item">
+      <div key ={'va_width_'+props.index} className="video-attribute-item">
         <div className="video-attribute-item-key">{displayLabels.width}</div>
         <div className="video-attribute-item-value">
           <input value={currentVideoAttributes.width} onChange={handleInput} id={"width"}></input>
@@ -148,7 +148,7 @@ const VideoAttribute = (props) => {
 
   const getHeightInput = () => {
     return (
-      <div key ={'va_height_'+Date.now()} className="video-attribute-item">
+      <div key ={'va_height_'+props.index} className="video-attribute-item">
         <div className="video-attribute-item-key">{displayLabels.height}</div>
         <div className="video-attribute-item-value">
           <input value={currentVideoAttributes.height} onChange={handleInput} id={"height"}></input>
@@ -172,7 +172,7 @@ const VideoAttribute = (props) => {
     let key = currentVideoAttributes.facingMode
     let title = cameraTypes[key]
     return (
-      <div key ={'va_ct_'+Date.now()} className="video-attribute-item">
+      <div key ={'va_ct_'+props.index} className="video-attribute-item">
         <div className="video-attribute-item-key">
           {displayLabels.facingMode}
         </div>
@@ -181,7 +181,7 @@ const VideoAttribute = (props) => {
             id="dropdown-basic-button"
             title={title}
             onSelect={handleCameraTypePickerSelection}
-            key={"va_media_type_dd" + Date.now()}
+            key={"va_media_type_dd" + props.index}
           >
             {Object.keys(cameraTypes).map((id, index) => {
               return (
@@ -201,7 +201,7 @@ const VideoAttribute = (props) => {
 
   const getCaptureLabelInput = () => {
     return (
-      <div key ={'va_cli_'+Date.now()} className="video-attribute-item">
+      <div key ={'va_cli_'+props.index} className="video-attribute-item">
         <div className="video-attribute-item-key">
           {displayLabels.capture_label}
         </div>
@@ -229,7 +229,7 @@ const VideoAttribute = (props) => {
       case "capture_label":
         return getCaptureLabelInput();
       default:
-        return < div key={'empty_'+key+Date.now()}></div>;
+        return < div key={'empty_'+key+props.index}></div>;
     }
   };
 

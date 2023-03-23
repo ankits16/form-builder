@@ -25,7 +25,7 @@ const ImageAttribute = (props) => {
   };
   const getMaxImageInput = () => {
     return (
-      <div key ={'ia_md_'+Date.now()} className="image-attribute-item">
+      <div key ={'ia_md_'+props.index} className="image-attribute-item">
         <div className="image-attribute-item-key">
           {displayLabels.max}
         </div>
@@ -51,7 +51,7 @@ const ImageAttribute = (props) => {
   };
   return (
     <Accordion >
-      <Accordion.Item alwaysOpen={true}>
+      <Accordion.Item>
         <Accordion.Header>Image Capture</Accordion.Header>
         <Accordion.Body>
         {Object.keys(currentImageAttributes).map((key) => {
