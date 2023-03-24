@@ -23,6 +23,23 @@ const ImageAttribute = (props) => {
     setCurrentImageAttributes(updatedAttributes);
     props.update('imageCapture', updatedAttributes)
   };
+
+  /**
+   * validate the input on blurr and restore if default if its empty or negative
+   */
+  const validateInputAndRestoreToDefaultIfRequired = (e) => {
+    let key = e.target.id;
+
+    let value = e.target.value;
+    if (value < 0 || value == "") {
+      e.target.value = currentImageAttributes[key];
+      let updatedAttributes = { ...currentImageAttributes };
+      updatedAttributes[key] = defaultAttributes[key];
+      setCurrentImageAttributes(updatedAttributes);
+      props.update("imageCapture", updatedAttributes);
+    }
+  };
+
   const getMaxImageInput = () => {
     return (
       <div key ={'ia_md_'+props.index} className="image-attribute-item">
@@ -34,6 +51,7 @@ const ImageAttribute = (props) => {
             id={"max"}
             value={currentImageAttributes.max}
             onChange={handleInput}
+            onBlur={validateInputAndRestoreToDefaultIfRequired}
           ></input>
         </div>
       </div>
@@ -49,6 +67,7 @@ const ImageAttribute = (props) => {
         return < div key={'empty_'+key+'_'+props.index}></div>;
     }
   };
+
   return (
     <Accordion >
       <Accordion.Item>
