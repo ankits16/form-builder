@@ -8,12 +8,36 @@ export class DependencyModel {
   constructor(id, operation, value, operator) {
     this.dependencyUUID = uniqueid();
     this.operation = operation ? operation : AllowedOperation.Equals
-    this.value = value
+    this.value = value ?  value.replace(/["']+/g, '' ) : value
     this.operator = operator
     this.id = id
   }  
+  
+  isDependencyComplete = function(){
+    let retval = false
+    if (this.operation === AllowedOperation.Equals){
+      retval = this.value && this.value.trim().length > 0
+    }else{
+      retval =  this.operation === AllowedOperation.IsPresent
+    }
+    return retval
+  }
+
+  expression = function(){
+    let retval = null
+    if (this.operation == AllowedOperation.Equals && this.id && this.value){
+      retval = 's.'+this.id+' === '+"'" + this.value + "'"
+    }
+
+    if (this.operation == AllowedOperation.IsPresent && this.id){
+      retval = '!!s.'+this.id
+    }
+    console.log('<<<< retval ' + this.id + ' ---- ' + retval)
+    return retval
+  }
 }
 
+/**function to generte unique ids for dependencies */
 function uniqueid(){
     // always start with a letter (for DOM friendlyness)
     var idstr=String.fromCharCode(Math.floor((Math.random()*25)+65));

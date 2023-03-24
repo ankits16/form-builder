@@ -10,7 +10,7 @@ const DependencyCollapsibleContainer = (props) => {
           <Accordion.Header>Dependencies</Accordion.Header>
           <Accordion.Body>
             <DependencyContainer
-              key={'dependency_container'+Date.now()} //just to keep it unique can change it later
+              key={'dependency_container'+props.index} //just to keep it unique can change it later
               form_ids_map={props.form_ids_map}
               data={props.data}
               form_model={props.form_model}

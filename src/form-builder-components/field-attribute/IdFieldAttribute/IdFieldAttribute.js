@@ -6,8 +6,8 @@ const IdFieldAttribute = (props) => {
   const [idConflict, setIdConflict] = useState(false);
 
   useEffect(() => {
-    // console.log("<<<<<<<<<<< IdFieldAttribute + useEffect");
-    // console.log(props);
+    // //console("<<<<<<<<<<< IdFieldAttribute + useEffect");
+    // //console(props);
     checkIfIdIsConflicting(props.value);
   }, [props.form_ids_map]);
 
@@ -25,17 +25,17 @@ const IdFieldAttribute = (props) => {
     //     });
     //   });
     // });
-    // console.log('^^^^^^^^^^^^^^^^ checkIfIdIsConflicting')
-    // console.log(props.idsMap)
-    // console.log(fieldId)
-    // console.log(props.idsMap[fieldId].length)
+    // //console('^^^^^^^^^^^^^^^^ checkIfIdIsConflicting')
+    // //console(props.idsMap)
+    // //console(fieldId)
+    // //console(props.idsMap[fieldId].length)
     
     if (props.form_ids_map[fieldId].length > 1){
       setIdConflict(true);
     }else{
       setIdConflict(false);
     }
-    // console.log('========== finished checkIfIdIsConflicting')
+    // //console('========== finished checkIfIdIsConflicting')
     
     
   };
@@ -46,7 +46,7 @@ const IdFieldAttribute = (props) => {
     props.operation(FormFieldLevelOperation.UpdateFieldAttribute, {
       id: event.target.value,
     });
-    console.log('@@@@@@@@@@@@@ checkIfIdIsConflicting '  + event.target.value)
+    //console('@@@@@@@@@@@@@ checkIfIdIsConflicting '  + event.target.value)
     // checkIfIdIsConflicting(event.target.value);
   };
   return (

@@ -5,9 +5,9 @@ import { AllowedOperation, DependencyModel } from "../../DependencyModel";
 
 const DependencyOperation = (props) => {
   const handleOperationSelection = (e) => {
-    // console.log("handleIdSelection " + e);
-    // console.log("~~~~~~~~~~DependencyOperation");
-    // console.log(props.dependency);
+    // //console("handleIdSelection " + e);
+    // //console("~~~~~~~~~~DependencyOperation");
+    // //console(props.dependency);
     let currentDependency = {...props.dependency}
     let previousOperation = currentDependency.operation
     currentDependency.operation = e === 'IsPresent' ? AllowedOperation.IsPresent : AllowedOperation.Equals

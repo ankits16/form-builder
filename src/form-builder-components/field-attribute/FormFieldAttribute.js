@@ -22,9 +22,9 @@ const FormFieldAttribute = (props) => {
   };
 
   const getFieldAttribute = (key) => {
-    // console.log('<<<<<<< FormFieldAttribute getFieldAttribute ' + props.formField.id)
-    // console.log(props.formField)
-    // console.log('+++++++ FormFieldAttribute getFieldAttribute')
+    // //console('<<<<<<< FormFieldAttribute getFieldAttribute ' + props.formField.id)
+    // //console(props.formField)
+    // //console('+++++++ FormFieldAttribute getFieldAttribute')
     switch (key) {
       case "id":
         return (
@@ -55,13 +55,13 @@ const FormFieldAttribute = (props) => {
         );
       case "form_model":
         return (
-          <textarea
+          <div
             key={key}
             type="textarea"
-            value={JSON.stringify(props.formField.form_model)}
+            // value={JSON.stringify(props.formField.form_model)}
             onChange={handleChange}
-            style={{ height: "100%", width: "100%", textAlign: "justify" }}
-          ></textarea>
+            style={{ height: "100%", width: "90%", textAlign: "justify", padding:10 }}
+          >{JSON.stringify(props.formField.form_model)} </div>
         );
       default:
         return (
@@ -76,7 +76,7 @@ const FormFieldAttribute = (props) => {
   };
 
   const handleChange = (event) => {
-    console.log(props);
+    //console(props);
   };
 
   let keys = Object.keys(props.formField).filter((key) => {
@@ -89,7 +89,7 @@ const FormFieldAttribute = (props) => {
   const getRequiredField = () => {
     return (
       <ReqiredFieldAttribute
-        key={"required_field_attribute" + Date.now()}
+        key={"required_field_attribute" + props.index}
         formField={props.formField}
         operation={props.operation}
       />
@@ -106,12 +106,12 @@ const FormFieldAttribute = (props) => {
           key={"field_attribute" + index}
           className="form-field-attribute-container"
         >
-          <div>
+          <div className="form-field-key">
             {fieldAttributeDisplayMap[key]
               ? fieldAttributeDisplayMap[key]
               : key}
           </div>
-          <div style={{ width: "100%", paddingLeft: 10 }}>
+          <div style={{ width: "85%", paddingLeft: 10 }}>
             {getFieldAttribute(key)}
           </div>
         </div>
@@ -120,13 +120,12 @@ const FormFieldAttribute = (props) => {
   };
 
   const handleFormModelUpdateFromSpecifiFields = (key, updatedAttributes) => {
-    var updatedFormModel = {...props.formField.form_model}
-    updatedFormModel[key] = updatedAttributes
-    console.log(updatedFormModel)
-    props.operation(
-        FormFieldLevelOperation.UpdateFieldAttribute,
-        {'form_model' : updatedFormModel}
-      );
+    var updatedFormModel = { ...props.formField.form_model };
+    updatedFormModel[key] = updatedAttributes;
+    //console(updatedFormModel);
+    props.operation(FormFieldLevelOperation.UpdateFieldAttribute, {
+      form_model: updatedFormModel,
+    });
   };
 
   /**
@@ -134,12 +133,12 @@ const FormFieldAttribute = (props) => {
    */
   const addFormFieldSpecificAttributesIfRequired = () => {
     let type = props.formField.type.trim();
-    console.log("--------addFormFieldSpecificAttributesIfRequired - " + type);
-    console.log(props);
+    // //console("--------addFormFieldSpecificAttributesIfRequired - " + type);
+    // //console(props);
     if (type === "video") {
       return (
         <VideoAttribute
-        index={props.index}
+          index={props.index}
           data={props.data}
           videoAttributes={props.formField.form_model.videoCapture}
           update={handleFormModelUpdateFromSpecifiFields}
@@ -165,7 +164,15 @@ const FormFieldAttribute = (props) => {
     );
   };
 
-  const handleFormModelAfterDependencyUpdate = (dependencies) => {};
+  const handleFormModelAfterDependencyUpdate = (expression) => {
+    var updatedFormModel = { ...props.formField.form_model };
+    updatedFormModel.active = expression;
+    // console.log('handleFormModelAfterDependencyUpdate ->>>' + expression)
+    // console.log(updatedFormModel);
+    props.operation(FormFieldLevelOperation.UpdateFieldAttribute, {
+      form_model: updatedFormModel,
+    });
+  };
 
   const prepareFieldAttributes = () => {
     return (
@@ -174,12 +181,15 @@ const FormFieldAttribute = (props) => {
         <div style={{ padding: 10 }} /*key={"att_layout" + Date.now()}*/>
           {getAttributesLayout()}
         </div>
-        <div style={{ padding: 10 }} /*key={"special_att_layout" + Date.now()}*/>
+        <div
+          style={{ padding: 10 }} /*key={"special_att_layout" + Date.now()}*/
+        >
           {addFormFieldSpecificAttributesIfRequired()}
         </div>
         <div style={{ padding: 10 }} /*key={"dependency_layout" + Date.now()}*/>
           <DependencyCollapsibleContainer
             key={"dcc" + props.index}
+            index={props.index}
             data={props.data}
             form_model={props.formField.form_model}
             form_ids_map={props.form_ids_map}

@@ -114,7 +114,7 @@ const PageSection = (props) => {
    * update the data source or parent json afterthe drag and drop of a section is complete
    */
   const updateDatasourceAfterFieldDragEnd = ((event) => {
-    console.log("updateDatasourceAfterFieldDragEnd");
+    //console("updateDatasourceAfterFieldDragEnd");
     const { active, over } = event;
     let items = props.section.fields;
     

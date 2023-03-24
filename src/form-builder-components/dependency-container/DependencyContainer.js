@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import DependencyOperator from "./dependency-operator/DependencyOperator";
 import Dependency from "./dependency/Dependency";
 import {
+  AllowedOperation,
+  DependencyExpressionGenerator,
   DependencyExpressionParser,
   DependencyModel,
 } from "./dependency/DependencyModel";
@@ -19,29 +21,33 @@ const DependencyContainer = (props) => {
   //   const [operators, setOperators] = useState([])
 
   useEffect(() => {
-    console.log("<<<<<, DependencyContainer");
+    ////console("<<<<<, DependencyContainer");
+    if (dependencies.length > 0){/** this is because we have to process the dependencies 1 time only */
+      return
+    }
     let updatedDependencies = [];
-    console.log(
-      props.form_model.active ? props.form_model.active : "No active"
-    );
+    // //console(
+    //   props.form_model.active ? props.form_model.active : "No active"
+    // );
     let active = props.form_model.active;
     if (active) {
       active = active.replace("s => ", "");
-      active = active.replace("||", "<<<OR>>>");
-      active = active.replace("&&", "<<<AND>>>");
+      active = active.replaceAll("||", "<<<OR>>>");
+      active = active.replaceAll("&&", "<<<AND>>>");
       let parts = active.split(/\<<<|\>>>/);
-      console.log(parts);
+      //console(parts);
       parts.map((part, index) => {
         if (index % 2 == 0) {
           let parsedExpression = new DependencyExpressionParser(part);
           updatedDependencies.push(
             //constructor(id, operation, value, operator, dependencyUUID)
+            //constructor(id, operation, value, operator)
             new DependencyModel(
               parsedExpression.id,
               parsedExpression.operation,
               parsedExpression.value,
               parts[index + 1],
-              Date.now()
+              // Date.now()
             )
           );
         }
@@ -50,11 +56,12 @@ const DependencyContainer = (props) => {
     setDependencies(updatedDependencies);
   }, [props.form_model]);
 
-  //   useEffect(() => {
-  //     console.log("<<<<<< update dependencies hook");
-  //     console.log(dependencies);
-  //     // setDependencies(dependencies);
-  //   }, [dependencies]);
+  useEffect(() => {
+    //console("<<<<<< update dependencies hook");
+    //console(dependencies);
+    // setDependencies(dependencies);
+    updateFormModelIfRequired();
+  }, [dependencies]);
 
   /**
    * add dependency
@@ -67,9 +74,53 @@ const DependencyContainer = (props) => {
     }
     //constructor(id, operation, value, operator, dependencyUUID)
     updatedDependencies.push(new DependencyModel());
-    console.log("<<<< addDependency ");
-    console.log(updatedDependencies);
+    // //console("<<<< addDependency ");
+    // //console(updatedDependencies);
     setDependencies(updatedDependencies);
+  };
+
+  const updateFormModelIfRequired = () => {
+    let operator = null;
+    let initialExpression = "s => ";
+    let finalExpression = initialExpression;
+    dependencies.map((dependency, index) => {
+      let isComplete = dependency.isDependencyComplete();
+      if (isComplete == true) {
+        let expression = dependency.expression(); // new DependencyExpressionGenerator(dependency).expression
+        if (expression) {
+          if (operator) {
+            finalExpression =
+              finalExpression + " " + operator + " " + expression;
+          } else {
+            finalExpression = finalExpression + expression;
+          }
+        }
+        if (expression) {
+          operator = dependency.operator ? dependency.operator : operator;
+          operator = operator == "OR" ? "||" : "&&";
+        }
+      } else {
+        console.log(
+          "<<<< not complete " +
+            isComplete +
+            " -- " +
+            dependency.id +
+            dependency.operation +
+            dependency.value
+        );
+      }
+    });
+    
+    if (
+      finalExpression !== initialExpression &&
+      finalExpression !== props.form_model.active
+    ) {
+      console.log("<<<<<<<< update form model in form data");
+      props.update(finalExpression);
+    }
+    console.log("$$$$$$ current ");
+    console.log(props.form_model.active);
+    console.log("@@@@@@@@ new \n" + finalExpression);
   };
 
   /**
@@ -86,41 +137,42 @@ const DependencyContainer = (props) => {
     });
     updatedDependencies.splice(indexOfUpdatedDependency, 1, updatedDependency);
     setDependencies(updatedDependencies);
+    // updateFormModelIfRequired()
   };
 
   /**
    * deletes a dependency
    */
   const deleteDependency = (dependency) => {
-    console.log("<<<< delete dependency at " + dependency.dependencyUUID);
+    //console("<<<< delete dependency at " + dependency.dependencyUUID);
     let updatedDependencies = [...dependencies];
     updatedDependencies = dependencies.filter((d) => {
       return dependency.dependencyUUID != d.dependencyUUID;
     });
-    console.log(updatedDependencies);
+    //console(updatedDependencies);
     setDependencies(updatedDependencies);
   };
 
   const updateOperator = (params) => {
-    let dependency = params.dependency
-    let operator = params.updatedOperator
+    let dependency = params.dependency;
+    let operator = params.updatedOperator;
     let updatedDependencies = [...dependencies];
-    updatedDependencies.map((d)=>{
-        if (dependency.dependencyUUID === d.dependencyUUID){
-            d.operator = operator
-        }
-    })
+    updatedDependencies.map((d) => {
+      if (dependency.dependencyUUID === d.dependencyUUID) {
+        d.operator = operator;
+      }
+    });
     setDependencies(updatedDependencies);
   };
 
   const handleChangesInDependency = (operationType, params) => {
     switch (operationType) {
       case DependencyContainerLevelOperations.UpdateDependency:
-        console.log("update dependency");
+        //console("update dependency");
         updateDependency(params);
         break;
       case DependencyContainerLevelOperations.DeleteDependency:
-        console.log("delete dependency");
+        //console("delete dependency");
         deleteDependency(params);
         break;
       case DependencyContainerLevelOperations.UpdateOperator:

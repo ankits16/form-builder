@@ -7,9 +7,9 @@ import { DependencyContainerLevelOperations } from "../DependencyContainer";
 
 const DependencyOperator = (props) => {
   const operations = ["AND", "OR"];
-  // console.log('???????? DependencyOperator')
-  // console.log(operations.indexOf(props.operator))
-  // console.log('YYYYYYYYYY DependencyOperator')
+  // //console('???????? DependencyOperator')
+  // //console(operations.indexOf(props.operator))
+  // //console('YYYYYYYYYY DependencyOperator')
 
 
 
@@ -21,7 +21,7 @@ const DependencyOperator = (props) => {
 //   }, [props.operator])
 
   const handleChange = (val) => {
-    console.log(val);
+    //console(val);
     props.operation(DependencyContainerLevelOperations.UpdateOperator, {dependency : props.dependency, updatedOperator: operations[val]})
     // props.update(props.index, val)
     // setCurrentOperation(val);

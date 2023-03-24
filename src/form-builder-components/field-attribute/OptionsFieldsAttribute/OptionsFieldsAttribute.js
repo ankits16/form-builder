@@ -103,7 +103,7 @@ const OptionsFieldsAttribute = (props) => {
   };
 
   const deleteOption = (optionId) => {
-    console.log("<<<<<<<< delete " + optionId);
+    //console("<<<<<<<< delete " + optionId);
     let updatedOptions = [...props.field.options];
     updatedOptions = updatedOptions.filter((option) => {
       return option.id !== optionId;

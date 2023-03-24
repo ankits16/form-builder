@@ -8,7 +8,7 @@ const ExportStoryboard = (props) => {
   const [isExportDisabled, setIsExportDisabled] = useState(true);
   const [fileName, setFileName] = useState("test");
   useEffect(() => {
-    console.log(props);
+    //console(props);
     setShow(props.showModal);
   }, [props.showModal]);
 
@@ -37,7 +37,7 @@ const ExportStoryboard = (props) => {
   function dropHandler(ev) {
     ev.preventDefault(); 
     // alert("File(s) dropped");
-    // console.log(ev)
+    // //console(ev)
     if (ev.dataTransfer.items) {
         if (ev.dataTransfer.items.length > 1) {
             alert("Only single files can be dragged and dropped");
@@ -45,21 +45,21 @@ const ExportStoryboard = (props) => {
         }
         if (ev.dataTransfer.items[0].kind === 'file') {
             var file = ev.dataTransfer.items[0].getAsFile();
-            console.log(file.name)
+            //console(file.name)
             setFileName(ev.dataTransfer.items[0].name)     
-            console.log(fileName)                       
+            //console(fileName)                       
         }
     }
   }
 
   const onDragEnter = (event) => {
     event.preventDefault(); 
-    console.log('<<<<<<<<< onDragEnter')
+    //console('<<<<<<<<< onDragEnter')
   }
 
   const onDragEnd = (event) => {
     event.preventDefault(); 
-    console.log('<<<<<<<<< onDragEnd')
+    //console('<<<<<<<<< onDragEnd')
   }
 
   return (

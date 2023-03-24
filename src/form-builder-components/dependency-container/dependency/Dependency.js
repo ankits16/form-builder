@@ -11,14 +11,14 @@ import { DependencyContainerLevelOperations } from "../DependencyContainer";
 
 
 const Dependency = (props) => {
-    console.log('@@@@@@@ Dependency ' + props.dependency.id + ' index = ' + props.index)
-    console.log(props.dependency)
-    console.log('@@@@@@@ End Dependency ' + props.dependency.id)
+    // //console('@@@@@@@ Dependency ' + props.dependency.id + ' index = ' + props.index)
+    // //console(props.dependency)
+    // //console('@@@@@@@ End Dependency ' + props.dependency.id)
 //   const [currentDependency, setCurrentDependency] = useState(props.dependency);
 
   const updateDependency = (updatedDependency) => {
-    console.log("======== updateDependency ");
-    console.log(updatedDependency);
+    // //console("======== updateDependency ");
+    // //console(updatedDependency);
     props.operation(DependencyContainerLevelOperations.UpdateDependency, updatedDependency)
     // setCurrentDependency(updatedDependency);
   };
@@ -32,7 +32,7 @@ const Dependency = (props) => {
     props.operation(DependencyContainerLevelOperations.DeleteDependency, props.dependency)
   };
 
-  console.log('~~~~~~~ depenency id key ' + 'd_id_'+props.dependency.dependencyUUID)
+  //console('~~~~~~~ depenency id key ' + 'd_id_'+props.dependency.dependencyUUID)
   return (
     <div className="dependency">
       <div className="dependency-item" style={{ background: "yellow" }}>

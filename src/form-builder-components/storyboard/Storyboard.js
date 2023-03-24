@@ -19,13 +19,13 @@ export const StoryboardLevelOperations = Object.freeze({
 const Storyboard = (props) => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const handlePageSelection = (selectedIndex, e) => {
-    console.log("handlePageSelection", selectedIndex);
+    //console("handlePageSelection", selectedIndex);
     setCurrentPageIndex(selectedIndex);
   };
 
   const updateIdsMap = () => {
     let updatedMap = {};
-    console.log(props);
+    //console(props);
     props.data.formData.pages.map((page) => {
       page.sections.map((section) => {
         section.fields.map((field) => {
@@ -64,9 +64,9 @@ const Storyboard = (props) => {
     });
     
     // setIdsMap(updatedMap)
-    // console.log("$$$$$$$$$$ updateIdsMap");
-    // console.log(updatedMap);
-    // console.log("------- updateIdsMap");
+    // //console("$$$$$$$$$$ updateIdsMap");
+    // //console(updatedMap);
+    // //console("------- updateIdsMap");
     return updatedMap
   };
 
@@ -83,7 +83,7 @@ const Storyboard = (props) => {
   };
 
   const deletePage = (pageId) => {
-    console.log('delete pageId ' + pageId)
+    //console('delete pageId ' + pageId)
     // let pageId = props.page.id;
     let filterdPages = props.data.formData.pages.filter((e) => {
       return e.id !== pageId;
@@ -93,8 +93,8 @@ const Storyboard = (props) => {
     });
     
     
-    console.log('delete pageId ' + pageId)
-    console.log('num pages ' + filterdPages.length)
+    //console('delete pageId ' + pageId)
+    //console('num pages ' + filterdPages.length)
     if (pageId > (filterdPages.length) ){
       setCurrentPageIndex(0)
     }else{
@@ -102,7 +102,7 @@ const Storyboard = (props) => {
     }
     updatePagesInDataSource(filterdPages);
     // setCurrentPageIndex(0)
-    console.log('<<<<< move to ' + currentPageIndex)
+    //console('<<<<< move to ' + currentPageIndex)
   };
 
   const updatePage = (updatedPage) => {
@@ -114,7 +114,7 @@ const Storyboard = (props) => {
       }
     });
     updatedJson.pages.splice(oldPageIndex, 1, updatedPage);
-    console.log("updatePage " + oldPageIndex);
+    //console("updatePage " + oldPageIndex);
     updatePagesInDataSource(updatedJson.pages);
   };
 
@@ -132,7 +132,7 @@ const Storyboard = (props) => {
   };
 
   const addPage =()=>{
-    console.log(props.data.formData)
+    //console(props.data.formData)
     let allPages = [ ...props.data.formData.pages];
     allPages.push({id: allPages.length +1 , sections:[]})
     updatePagesInDataSource(allPages)

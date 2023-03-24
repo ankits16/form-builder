@@ -25,8 +25,8 @@ export default function FormField(props) {
 
   const updateField = (impactedFieldAttributes)=>{
     let updatedField = {...props.field}
-    console.log('<<<<<< Formfield updatedField')
-    console.log(updatedField)
+    //console('<<<<<< Formfield updatedField')
+    //console(updatedField)
     updatedField = Object.assign({}, updatedField,  impactedFieldAttributes)
     props.operation(PageSectionLevelOperations.UpdateField, [updatedField])
   }

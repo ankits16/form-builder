@@ -22,8 +22,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 
 const DragUI = (props) => {
-  console.log("<<<<<DragUI props>>>>>");
-  console.log(props);
+  //console("<<<<<DragUI props>>>>>");
+  //console(props);
   const [activeId, setActiveId] = useState(null);
   const [items, setItems] = useState(['1', '2', '3']);
   const sensors = useSensors(

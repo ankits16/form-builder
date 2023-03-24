@@ -19,7 +19,7 @@ const ImageAttribute = (props) => {
     let key = e.target.id;
     let updatedAttributes = { ...currentImageAttributes };
     updatedAttributes[key] = e.target.value;
-    console.log(updatedAttributes);
+    //console(updatedAttributes);
     setCurrentImageAttributes(updatedAttributes);
     props.update('imageCapture', updatedAttributes)
   };
@@ -46,7 +46,7 @@ const ImageAttribute = (props) => {
         case "max":
             return getMaxImageInput()
         default:
-        return < div key={'empty_'+key+Date.now()}></div>;
+        return < div key={'empty_'+key+'_'+props.index}></div>;
     }
   };
   return (

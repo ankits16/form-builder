@@ -30,13 +30,13 @@ function App() {
   const [showExportStoryboardModal, setShowExportStoryboardModal] = useState(false)
 
   const showStoryboardExport = ()=>{
-    console.log('<<<<<< app.js showStoryboardExport')
+    //console('<<<<<< app.js showStoryboardExport')
     setShowExportStoryboardModal(true)
   }
 
   const exportJson = (fileName) => {
     // let fileName = "json.txt"
-    console.log("exportJson " + fileName);
+    //console("exportJson " + fileName);
     
     let contentType = "text/plain";
     var a = document.createElement("a");
@@ -49,14 +49,14 @@ function App() {
   };
 
   const hideStoryboardExport = (fileName)=>{
-    console.log('<<<<<< app.js hideStoryboardExport')
+    //console('<<<<<< app.js hideStoryboardExport')
     setShowExportStoryboardModal(false)
     if (fileName){
       exportJson(fileName)
     }
   }
 
-  console.log('render with ' + showExportStoryboardModal)
+  //console('render with ' + showExportStoryboardModal)
   return (
     <>
       <FormBuilderHeader showStoryboardExport ={showStoryboardExport}/>

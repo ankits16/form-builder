@@ -11,16 +11,16 @@ const DependencyValue = (props) => {
   const getAssociatedField = () => {
     let currentID = props.dependency.id ? props.dependency.id.trim() : "";
     let map = props.form_ids_map[currentID];
-    // console.log("*************** getAssociatedField " + currentID);
-    // console.log(props.idsMap);
+    // //console("*************** getAssociatedField " + currentID);
+    // //console(props.idsMap);
     if (map) {
       map = map[0];
-    //   console.log(map);
+    //   //console(map);
       map = map.split("::");
       let pageId = map[0];
       let sectionId = map[1];
       let fieldEditorId = map[2];
-    //   console.log(props);
+    //   //console(props);
       let page = props.data.pages.filter((page) => {
         return page.id == pageId;
       })[0];
@@ -31,29 +31,29 @@ const DependencyValue = (props) => {
       let field = section.fields.filter((field) => {
         return field.editor_id == fieldEditorId;
       })[0];
-    //   console.log(map);
-    //   console.log(
+    //   //console(map);
+    //   //console(
     //     "+++++++++++++++ for field " + field.id + "----- " + currentID
     //   );
-    //   console.log(field);
+    //   //console(field);
       return field;
     } else {
-    //   console.log("--------------- getAssociatedField " + currentID);
+    //   //console("--------------- getAssociatedField " + currentID);
     }
 
     return null;
   };
 
   const callUpdateDependency = (val)=>{
-    console.log(props);
+    //console(props);
     let currentDependency = {...props.dependency}
     currentDependency.value = val
     props.update(currentDependency);
   }
   
   const handleValueChangeFromDropdown = (e)=>{
-    console.log('$$$$$$$$$$$ handleValueChangeFromDropdown ');
-    console.log(e);
+    //console('$$$$$$$$$$$ handleValueChangeFromDropdown ');
+    //console(e);
     callUpdateDependency(e)  
   }
 
@@ -66,7 +66,7 @@ const DependencyValue = (props) => {
       ""
     ) : (
       <DropdownButton
-      key={'d_dv_dd'+Date.now()}
+      key={'d_dv_dd'+props.index}
         id="dropdown-basic-button"
         title={props.dependency.value ? props.dependency.value : "--Select--"}
         onSelect={handleValueChangeFromDropdown}
@@ -86,13 +86,13 @@ const DependencyValue = (props) => {
     }
     let field = getAssociatedField();
     if (field) {
-    //   console.log(field);
+    //   //console(field);
     let options = field.options;
     if (options && options.length > 0) {
       return getValuesDropDown(field.options);
     } 
     }
-    return <input value={props.dependency.value} onChange={handleValueChangeFromText}></input>;
+    return <input value={props.dependency.value ? props.dependency.value :  ''} onChange={handleValueChangeFromText}></input>;
   };
 
   return <div>{getControlForValue()}</div>;

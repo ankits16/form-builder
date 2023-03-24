@@ -3,3 +3,7 @@
   justify-content: space-between;
   padding: 10px;
 }
+
+.form-field-key{
+  width: 200px;
+}

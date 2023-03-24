@@ -5,9 +5,9 @@ import { PageSectionLevelOperations } from "../page-section/PageSection";
 
 const AddItemOptions = (props) => {
   const getNewFormFieldId = () => {
-    console.log(props);
+    //console(props);
     let newFieldEditorId = props.data.section.fields.length + 1;
-    console.log(newFieldEditorId);
+    //console(newFieldEditorId);
     return newFieldEditorId;
   };
 

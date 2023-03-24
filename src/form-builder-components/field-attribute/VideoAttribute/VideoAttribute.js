@@ -36,7 +36,7 @@ const VideoAttribute = (props) => {
   };
 
   const handleMediaTypeSelection = (e) => {
-    console.log(e)
+    //console(e)
     let updatedAttriutes = {...currentVideoAttributes}
     updatedAttriutes.acceptMedia = e
     setCurrentVideoAttributes(updatedAttriutes)
@@ -74,7 +74,7 @@ const VideoAttribute = (props) => {
   };
 
   const handleCanPauseSelection = (e) => {
-    console.log(e)
+    //console(e)
     let updatedAttriutes = {...currentVideoAttributes}
     updatedAttriutes.canPause = e == 0 ? true : false
     setCurrentVideoAttributes(updatedAttriutes)
@@ -110,11 +110,11 @@ const VideoAttribute = (props) => {
   };
 
   const handleInput = (e) => {
-    console.log(e.target.id);
+    //console(e.target.id);
     let key = e.target.id;
     let updatedAttributes = { ...currentVideoAttributes };
     updatedAttributes[key] = e.target.value;
-    console.log(updatedAttributes);
+    //console(updatedAttributes);
     setCurrentVideoAttributes(updatedAttributes);
     props.update('videoCapture', updatedAttributes)
   };

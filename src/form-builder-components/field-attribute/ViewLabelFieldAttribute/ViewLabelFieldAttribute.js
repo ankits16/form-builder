@@ -12,7 +12,7 @@ const ViewLabelFieldAttribute = (props) => {
 
   const handleChange = (event) => {
     // we have to make sure that slugified version of view label is updated in id as well
-    console.log(props.field);
+    //console(props.field);
     let currentSlugifiedViewLabel = slugify(props.field.view_label);
     let impactedAttributes = { view_label: event.target.value };
     if (

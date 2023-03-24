@@ -1,23 +1,23 @@
 import React, { useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { AllowedOperation, DependencyModel } from "../../DependencyModel";
+import { AllowedOperation, DependencyExpressionGenerator, DependencyModel } from "../../DependencyModel";
 // import { AllowedOperation, DependencyModel } from "../../Dependency";
 
 const DependencyId = (props) => {
-  console.log(
-    "############ DependencyId " +
-      props.dependency.id +
-      " index = " +
-      props.index
-  );
-  console.log(props.dependency);
-  console.log("############ End DependencyId " + props.dependency.id);
+  // //console(
+  //   "############ DependencyId " +
+  //     props.dependency.id +
+  //     " index = " +
+  //     props.index
+  // );
+  // //console(props.dependency);
+  // //console("############ End DependencyId " + props.dependency.id);
 
   const handleIdSelection = (e) => {
-    console.log("^^^^^^^^^^^handleIdSelection " + e);
-    console.log("DependencyId");
-    console.log(props);
+    // //console("^^^^^^^^^^^handleIdSelection " + e);
+    // //console("DependencyId");
+    // //console(props);
     let currentDependency = { ...props.dependency };
     currentDependency.id = e;
     currentDependency.value = null
@@ -41,7 +41,7 @@ const DependencyId = (props) => {
             );
           })}
         </DropdownButton>
-        <div>{props.dependency.expression}</div>
+        <div>{props.dependency.expression()}</div>
       </>
     );
   };

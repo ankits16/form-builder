@@ -71,7 +71,7 @@ const FormPage = (props) => {
   };
 
   const deleteSectionAtIndex = (sectionId) => {
-    console.log("deleteSectionAtIndex called " + sectionId);
+    //console("deleteSectionAtIndex called " + sectionId);
 
     let filteredSections = props.page.sections.filter((e) => {
       return e.id !== sectionId;

@@ -4,7 +4,7 @@ import "./canvas.css";
 
 const Canvas = (props) => {
   const exportJson = () => {
-    console.log("exportJson");
+    //console("exportJson");
     let fileName = "json.txt";
     let contentType = "text/plain";
     var a = document.createElement("a");
