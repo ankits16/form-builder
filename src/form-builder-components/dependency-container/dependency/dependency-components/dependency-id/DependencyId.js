@@ -34,11 +34,13 @@ const DependencyId = (props) => {
           key={"d_id_dd" + Date.now()}
         >
           {Object.keys(props.form_ids_map).map((id, index) => {
-            return (
-              <Dropdown.Item key={"d_id_dd_item" + index} eventKey={id}>
-                {id}
-              </Dropdown.Item>
-            );
+            if (id !== props.formField.id){
+              return (
+                <Dropdown.Item key={"d_id_dd_item" + index} eventKey={id}>
+                  {id}
+                </Dropdown.Item>
+              );
+            }
           })}
         </DropdownButton>
         <div>{props.dependency.expression()}</div>

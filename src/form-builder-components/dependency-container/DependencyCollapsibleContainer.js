@@ -15,6 +15,7 @@ const DependencyCollapsibleContainer = (props) => {
               data={props.data}
               form_model={props.form_model}
               update={props.update}
+              formField ={props.formField}
             />
           </Accordion.Body>
         </Accordion.Item>

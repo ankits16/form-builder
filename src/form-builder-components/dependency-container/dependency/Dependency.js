@@ -44,6 +44,7 @@ const Dependency = (props) => {
           update={updateDependency}
           index={props.index}
           operation={props.operation}
+          formField ={props.formField}
         />
       </div>
       <div className="dependency-item" style={{ background: "yellow" }}>

@@ -197,6 +197,7 @@ const DependencyContainer = (props) => {
               dependency={dependency}
               index={index}
               operation={handleChangesInDependency}
+              formField ={props.formField}
             />
             {dependency.operator ? (
               <DependencyOperator

@@ -191,6 +191,7 @@ const FormFieldAttribute = (props) => {
             key={"dcc" + props.index}
             index={props.index}
             data={props.data}
+            formField ={props.formField}
             form_model={props.formField.form_model}
             form_ids_map={props.form_ids_map}
             update={handleFormModelAfterDependencyUpdate}
