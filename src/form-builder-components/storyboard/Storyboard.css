@@ -6,16 +6,28 @@
     border-radius: 10px;
   }
 
+  .storyboard{
+    /* gap: 10px; */
+    /* background-color: blue; */
+    margin: 10px;
+  }
+
   .storyboard-header{
     display: flex;
-    height: 80px;
+    /* height: 80px; */
     padding: 10px 5px 20px 70px ;
     /* background-color: aqua; */
-    margin: 100;
+    margin: 10px;
+    clear: both;
+    overflow: visible;
   }
   .storyboard-header-item{
     padding: 10px;
     height: 100%;
     /* background-color: beige; */
     align-items: center;
+    bottom: 10px;
+    /* clear: both; */
+    margin: 10px !important;
+    overflow: visible;
   }

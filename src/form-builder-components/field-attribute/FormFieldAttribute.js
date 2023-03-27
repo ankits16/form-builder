@@ -1,6 +1,7 @@
 import React from "react";
 import DependencyCollapsibleContainer from "../dependency-container/DependencyCollapsibleContainer";
 import DependencyContainer from "../dependency-container/DependencyContainer";
+import ExpandingText from "../exapnding-text/ExpandingText";
 import { FormFieldLevelOperation } from "../form-field/FormField";
 import "./FormFieldAttribute.css";
 import IdFieldAttribute from "./IdFieldAttribute/IdFieldAttribute";
@@ -65,12 +66,12 @@ const FormFieldAttribute = (props) => {
         );
       default:
         return (
-          <input
+          <ExpandingText
             key={key}
             type="text"
             value={props.formField[key]}
             onChange={handleChange}
-          ></input>
+          ></ExpandingText>
         );
     }
   };

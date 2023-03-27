@@ -1,4 +1,5 @@
 import React from "react";
+import ExpandingText from "../../exapnding-text/ExpandingText";
 import { FormFieldLevelOperation } from "../../form-field/FormField";
 
 const ViewLabelFieldAttribute = (props) => {
@@ -28,11 +29,11 @@ const ViewLabelFieldAttribute = (props) => {
     );
   };
   return (
-    <input
+    <ExpandingText
       type="text"
       value={props.field.view_label}
       onChange={handleChange}
-    ></input>
+    ></ExpandingText>
   );
 };
 

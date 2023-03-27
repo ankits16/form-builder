@@ -4,6 +4,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import AddItemOptions from "../add-item-options/AddItemOptions";
 import FormField from "../form-field/FormField";
+import ExpandingText from "../exapnding-text/ExpandingText";
 import "../page-section/PageSection.css";
 
 import {
@@ -165,15 +166,15 @@ const PageSection = (props) => {
                       Section Title
                     </label>
                   </div>
-                  <div className="section-header">
-                    <input
+                  <div className="section-header" style={{flex: 1}}>
+                    <ExpandingText
                       type="text"
                       id={"inputPassword" + props.section.id}
                       className="form-control"
                       aria-describedby="passwordHelpInline"
                       value={props.section.title}
                       onChange={handleSectionTitleChange}
-                      form_ids_map={props.form_ids_map}
+                      // form_ids_map={props.form_ids_map}
                     />
                   </div>
                   <div className="section-header">

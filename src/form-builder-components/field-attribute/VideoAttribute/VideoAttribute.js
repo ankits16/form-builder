@@ -13,7 +13,7 @@ const VideoAttribute = (props) => {
     maxDuration: 20000,
     width: 640,
     height: 480,
-    facingMode: "vyn.FacingModes.Front",
+    facingMode: "vyn.FacingModes.Back",
     capture_label: "'Record a video showing surroundin'",
   };
   const displayLabels = {
