@@ -25,7 +25,7 @@ const AddItemOptions = (props) => {
     addFormField({
       editor_id: getNewFormFieldId(),
       id: "",
-      type: "text ",
+      type: "text",
       view_label: "",
       capture_label: "",
       form_model: "",
@@ -36,7 +36,7 @@ const AddItemOptions = (props) => {
     addFormField({
       editor_id: getNewFormFieldId(),
       id: "",
-      type: "image ",
+      type: "image",
       view_label: "",
       capture_label: "",
       form_model: {
@@ -51,7 +51,7 @@ const AddItemOptions = (props) => {
     addFormField({
       editor_id: getNewFormFieldId(),
       id: "",
-      type: "video ",
+      type: "video",
       view_label: "",
       capture_label: "",
       form_model: {
@@ -77,7 +77,7 @@ const AddItemOptions = (props) => {
     addFormField({
       editor_id: getNewFormFieldId(),
       id: "checkbox_field_id_" + getNewFormFieldId(),
-      type: "checkbox ",
+      type: "checkbox",
       view_label: "",
       capture_label: "",
       form_model: "",
@@ -88,7 +88,7 @@ const AddItemOptions = (props) => {
     addFormField({
       editor_id: getNewFormFieldId(),
       id: "",
-      type: "quantity ",
+      type: "quantity",
       view_label: "",
       capture_label: "",
       form_model: "",

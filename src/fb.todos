@@ -23,5 +23,15 @@
 	8. Use _ in slugify
 	9. id, operation, value = dependency
 	10. operations ={Equals ===, isPresent = !!}
+
+	23rd March
+	1. Id should not appear in dependency
+
+
+	24th march :
+	1. Capure Label: Default Empty
+	2. Map both th capture label
+	3. Please complete previously added dependency
+	4. Import and load
 	
 
